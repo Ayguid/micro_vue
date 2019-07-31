@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name='loginza-verification' content='6c7a670b6492c7d0a6623b99122b5e34' />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <meta name="description" content="Free online 2D and 3D CAD viewer. It supports AutoCAD DWG/DXF, STEP, STP, IGES, IGS, STL, SAT (ACIS&#174;), Parasolid (x_t, x_b), SolidWorks ™ (sldprt), PLT, SVG, CGM and other formats. With its help you can view your drawing or 3D model in any browser and from any device, including Android and iOS devices. ShareCAD - view files online anytime, anywhere!">
+        <title>Frame - Free online CAD Viewer. View AutoCAD DWG/DXF, HPGL PLT, SVG, CGM, STEP, IGES, STL, SAT (ACIS&#174;), Parasolid (x_t, x_b), SolidWorks ™ (sldprt) files in web</title>
+        <link href="./Content/jqueryui.js" rel="stylesheet"/>
+        <link href="./Content/toolbar.js" rel="stylesheet"/>
+        <script src="./js/modernizr.js"></script>
+        <script src="./js/jquery.js"></script>
+        <script src="./js/jqueryui.js"></script>
+        <script src="./js/viewer.js"></script>
+        <style type="text/css">
+        .ui-dialog-title {
+            font-size: 12px !important;
+        }
+
+        .ui-dialog, .ui-dialog-titlebar {
+            padding: 4px !important;
+        }
+
+        .makesmaller {
+            font-family: "sans-serif", "Trebuchet MS", "Helvetica", "Arial", "Verdana";
+            font-size: 64%;
+            overflow: auto;
+        }
+
+        body {
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        div.canvas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        canvas.draw {
+            width: 100%;
+            height: 100%;
+        }
+
+        div.nav {
+            position: absolute;
+            z-index: 100;
+            opacity: 0.5;
+        }
+
+            div.nav:hover {
+                opacity: 1;
+            }
+
+        div.left {
+            left: 10px;
+            top: 10px;
+        }
+
+        div.right {
+            right: 10px;
+            top: 10px;
+        }
+
+        div.powered {
+            position: absolute;
+            z-index: 1000;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        span.lt {
+            padding: 1px 4px 1px 4px;
+            margin: 2px 2px;
+            background-color: white;
+            border-radius: 4px;
+            opacity: 0.5;
+        }
+
+        button.nav {
+            margin-right: 4px;
+            /*height: 30px;*/
+        }
+
+            button.nav:hover, select.nav {
+                cursor: pointer;
+            }
+
+        select.nav {
+            margin-top: 3px;
+            height: 24px;
+            width: 150px;
+            border-radius: 4px;
+        }
+
+        div.veil {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            z-index: 500;
+            text-align: center;
+        }
+
+        div.loading {
+            position: absolute;
+            background: url(/loading.gif) no-repeat center center rgba(255, 255, 255, 0.50);
+            height: 100%;
+            width: 100%;
+            z-index: 10000;
+            visibility: hidden;
+        }
+    </style>
+        <script type="text/javascript">
+        $(function () {
+            var iconSet = [{ icon: "icon_zoomin", text: false }, { icon: "icon_zoomout", text: false }, { icon: "icon_bw", text: false }, { icon: "icon_extents", text: false }, { icon: "icon_layers", text: false }];
+            $("button.nav").each(function (i) {
+                if ((i < iconSet.length)) {
+                    $(this).button({
+                        text: iconSet[i].text,
+                        icons: { primary: iconSet[i].icon }
+                    });
+                } else {
+                    $(this).button();
+                }
+            });
+            $("#dialogLayers").dialog({ autoOpen: false });
+
+            changeDialogVisibility = function (dlg) {
+                if ($(dlg).dialog("isOpen")) {
+                    $(dlg).dialog("close");
+                } else {
+                    $(dlg).dialog("open");
+                }
+            }
+        });
+
+        </script>
+        <!-- <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            try {
+                var pageTracker = _gat._getTracker("UA-3486453-9"); pageTracker._trackPageview();
+            }
+            catch (err) { }
+        </script> -->
+    </head>
+    <body>
+        <div class="canvas">
+            <canvas id="cadDraw" class="draw"></canvas>
+            <div class="veil" id="veil" onclick="activateControl(this)"></div>
+            <div class="nav left makesmaller">
+                <button class="nav" onclick="cad.face.zoomIn();">+</button>
+                <button class="nav" onclick="cad.face.zoomOut();">-</button>
+                <button class="nav" onclick='cad.face.changeBackgroundColor(this);'>B/W</button>
+                <button class="nav" onclick="cad.face.resetView();" title="Reset">&oplus;</button>
+                <button class="nav" onclick="changeDialogVisibility('#dialogLayers');" title="Layers">L</button>
+            </div>
+            <div style="position: absolute; z-index: 1000; left: 8px; top: 46px">
+                <!-- <span class="lt">
+                    <a id="cadEditorX" href="http://3d-viewers.com/download-step-stl-iges-viewer.html" target="_blank" style="color: black;">3D Viewer: STP, IGS, STL - Download</a>
+                </span> -->
+            </div>
+            <div class="nav right">
+                <select class="nav" id="dropDownlist">
+        </select>
+                <select class="nav" id="fileDownlist" style="display: none">
+        </select>
+            </div>
+            <!-- <div class="powered">
+                <a id="shareCad" href="#" target="_blank" style="color: gray;">ShareCAD.org</a>
+            </div> -->
+        </div>
+        <div id="dialogLayers" class="makesmaller" title="Layers">
+            <form id="checkBoxlist" style="max-height: 500px">
+    </form>
+        </div>
+        <!-- <div class="loading" id="loading"></div> -->
+        <script type="text/javascript">
+    cad.service = "/cadframe";
+    cad.init(document.getElementById("cadDraw"));
+    cad.face.cad = cad;
+    cad.settings.noscroll = false;
+    cad.settings.nomsg = true;
+
+    var activateControl = function (elm) {
+        // document.getElementById('loading').style.visibility = 'visible';
+        elm.style.zIndex = -1;
+        cad.service = "/api/draw";
+        setTimeout(function() {
+            showControl("");
+        }, 300);
+    }
+
+    var loadPredefined = function () {
+        cad.settings.black = "white" == "black";
+        cad.state.layout = 0;
+        var layers = {0:true};
+        for (var l in layers) {
+            var param = {};
+            param.i = l;
+            param.v = layers[l];
+            param.id = cad.currentID;
+            cad.get("layer?" + cad.makeParams(param), undefined, function (msg) {
+                cad.refresh();
+            }, null, false);
+        }
+    }
+
+    var showControl = function (id) {
+        $("canvas.draw").css("display", "block");
+        $("div.info").css("display", "none");
+
+        cad.currentID = id;
+        // $("#shareCad")[0].href = document.location.origin + "#" + id;
+
+        var faceUpdate = function () {
+            //cad.state.layout = 0;
+            loadPredefined();
+            cad.box.init();
+            cad.refresh(function() {
+                document.getElementById('loading').style.visibility = 'hidden';
+                return true;
+            });
+
+            cad.face.updateCBS("checkBoxSettings");
+            cad.face.updateCBL("checkBoxlist");
+            cad.face.updateDDL("dropDownlist");
+        }
+        faceUpdate();
+        cad.face.updateFDL("fileDownlist", faceUpdate);
+    }
+
+    if (true) {
+        activateControl(document.getElementById("veil"));
+    }
+
+    if ("" != "") {
+        showControl("");
+        cad.unload();
+    }
+
+    window.oncontextmenu = function (e) {
+        return false;
+    };
+</script>
+    </body>
+</html>
