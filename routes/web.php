@@ -46,6 +46,12 @@ function(){
     Route::post('password/reset', 'Auth\AdminResetPasswordController@reset');
     Route::get('password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
 
+    //admin profiles
+    Route::get('adminProfiles', 'AdminController@adminProfiles')->name('adminProfiles');
+    Route::post('addAddmin', 'AdminController@addAdmin')->name('addAdmin');
+    Route::get('/editAdmin/{id}', 'AdminController@editAdmin')->name('editAdmin');
+    Route::post('/updateAdmin', 'AdminController@updateAdmin')->name('updateAdmin');
+
     //categories section
     Route::post('/addCategory', 'CategoryController@store')->name('addCategory');
     Route::get('/showCategory/{id}', 'CategoryController@show')->name('showCategory');
@@ -63,8 +69,8 @@ function(){
     Route::post('/addProduct', 'ProductController@store')->name('addProduct');
     Route::get('/editProduct/{id}', 'ProductController@edit')->name('editProduct');
     Route::post('/updateProduct', 'ProductController@update')->name('updateProduct');
+    Route::get('/findProducts','ProductController@find')->name('adminFindProduct');
     Route::delete('/deleteProduct/{id}','ProductController@destroy')->name('destroyProduct');
-    Route::get('/findProduct','ProductController@find')->name('adminFindProduct');
 
     //media
     Route::get('/files','FileController@index')->name('fileManager');

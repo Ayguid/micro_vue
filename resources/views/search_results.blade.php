@@ -2,17 +2,19 @@
 @section('content')
   <div class="container">
 
-    <h3>{{session('country.country_desc')}}</h3>
-    {{Lang::get('messages.welcome')}}
 
     @php
     $lang=App::getLocale();
-    if ($lang== 'pt-BR') {
-      $lang='pt';
-    }
+    // if ($lang== 'pt-BR') {
+    //   $lang='pt';
+    // }
     @endphp
 
-
+    @isset($data['categories'])
+      <div class="d-flex flex-wrap justify-content-start">
+        @include('components.category-menu')
+      </div>
+    @endisset
 
 
       @php
@@ -26,7 +28,6 @@
       <div class="d-flex justify-content-around">
         {{ $data['products']->appends(request()->except('page'))->links() }}
       </div>
-
       @if ($data['products']->count()==0)
         <p>No se encontraron productos</p>
         <a class="btn btn-primary" href="{{url()->previous()}}">Back</a>

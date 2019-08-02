@@ -27,7 +27,8 @@ class LandingController extends Controller
   {
     if ($country = session('country')) {
       if ($id) {
-        $this->data['category']=$cat=Category::find($id);
+        $this->data['category']=Category::find($id);
+        $this->data['category']->getTopCategories;
       }
       return view('country_landing')->with('data', $this->data);
     }else {
@@ -64,7 +65,6 @@ class LandingController extends Controller
 
   public function find(Request $request ,$query=null)
   {
-
     $ctyId=session('country')->id;
     $this->data['products'] = Product::join('products_in_countries', 'products.id', '=', 'products_in_countries.product_id')
     ->where('product_code', 'LIKE', '%'.$query.'%')->where('products_in_countries.country_id', '=', $ctyId)

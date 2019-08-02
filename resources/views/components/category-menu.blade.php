@@ -1,4 +1,4 @@
-<div class="row mt-4">
+<div class="row">
   @foreach ($data['categories'] as $cat)
     <div class="col-3">
       <div class="row">
@@ -12,11 +12,11 @@
               @endforeach
             </div>
           </div>
-          {{-- @if (!isset($data['products']))
+          @if (!isset($data['category']) && !isset($data['products']))
             <div class="col-12">
-              <img src="{{$cat->image_path}}" alt="" width="100%">
+              <img src="{{asset('/images/covers/'.$cat->image_path)}}" alt="" width="100%">
             </div>
-          @endif --}}
+          @endif
         </div>
       </div>
     @endforeach

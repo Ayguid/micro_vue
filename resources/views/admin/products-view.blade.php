@@ -13,8 +13,11 @@
 
     <a class="btn btn-secondary" href="{{route('admin.dashboard')}}">Back to Dashboard</a>
 
+
       @include('admin.components.products-component', ['products'=>$data['products']])
       @if ($data['products']->count()==0)
+
+
         <p>
           No se encontraron productos
         </p>

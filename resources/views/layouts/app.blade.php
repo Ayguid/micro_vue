@@ -41,7 +41,9 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{Lang::get('messages.language')}}
+                {{ config('app.locale')}}
+                {{-- {{LaravelLocalization::getCurrentLocale()}} --}}
+                {{-- {{Lang::get('messages.language')}} --}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
@@ -53,15 +55,25 @@
             </li>
 
 
-            <li class="nav-item"> <a class="nav-link" href="{{route('country_landing')}}">{{ Lang::get('messages.change_country')}}</a> </li>
+
+              <li class="nav-item dropdown">
+                @if (session('country'))
+
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{session('country')->country_desc}}
+                  </a>
+                @endif
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                  <a class="dropdown-item" href="{{route('country_landing')}}">{{ Lang::get('messages.change_country')}}</a>
+
+                </div>
+              </li>
+
           </ul>
 
           <!-- Right Side Of Navbar -->
-          {{-- <form id="searchForm" action="{{route('userFindProduct')}}" method="get" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="{{Lang::get('messages.search')}}" aria-label="{{Lang::get('messages.search')}}" name="query">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{Lang::get('messages.search')}}</button>
-          </form> --}}
-          <search-component></search-component>
+
+          <search-component :consulturl='{{json_encode(route('userFindProduct'))}}'></search-component>
 
           <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->

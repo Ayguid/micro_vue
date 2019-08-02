@@ -34,8 +34,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
-          <ul class="navbar-nav mr-auto">
-
 
             {{-- <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,6 +53,11 @@
             </div> --}}
             {{-- <li> <a class="btn btn-secondary" href="{{route('country_landing')}}">{{ Lang::get('messages.change_country')}}</a> </li> --}}
           </ul>
+
+          <form id="searchForm" action="{{route('adminFindProduct')}}" method="get" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="search" aria-label="search" name="string">
+            <button class="btn btn-outline-success my-2 my-sm-0" name="search" type="submit">Search</button>
+          </form>
 
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ml-auto">

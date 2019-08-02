@@ -15,13 +15,13 @@
     @isset($category)
       {{-- <h3>View</h3> --}}
       @if ($category->parent_id)
-        <a class="btn btn-primary" href="{{route('showCategory', $category->parent_id)}}">{{$category->father()->first()->title_es}}</a>
+        <a class="" href="{{route('showCategory', $category->parent_id)}}">{{$category->father()->first()->title_es}}</a>
       @endif
 
 
 
       <div class="row">
-        <div class="col-4">
+        <div class="col-4 mt-2">
           <div class="d-flex justify-content-start">
 
           <h3 >{{$category->title_es}}</h3>

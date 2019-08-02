@@ -2148,7 +2148,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [],
+  props: ['consulturl'],
   data: function data() {
     return {};
   },
@@ -2156,13 +2156,15 @@ __webpack_require__.r(__webpack_exports__);
     validateSearch: function validateSearch(event) {
       event.preventDefault();
       var form = this.$el.children[0];
+      var query = form.elements.query.value;
 
-      if (form.elements.query.value) {
-        axios.get('/searchProduct/' + form.elements.query.value).then(function (response) {
+      if (query) {
+        axios.get(this.consulturl + '/' + query).then(function (response) {
           if (response.data == 'Not found') {
             form.elements.query.value = "not found";
           } else {
             form.submit();
+            console.log(response);
           }
         })["catch"](function (error) {// handle error
         })["finally"](function () {// always executed
@@ -2184,6 +2186,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -72364,7 +72373,7 @@ var render = function() {
             _vm._v(" "),
             _c("input", {
               attrs: { type: "text", name: "locale", hidden: "" },
-              domProps: { value: this.locale }
+              domProps: { value: _vm.$root.local }
             }),
             _vm._v(" "),
             _c("input", {
@@ -72681,77 +72690,86 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("a", { attrs: { href: "../showProduct/" + _vm.product.id } }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v(
-                _vm._s(
-                  _vm.product["title_" + _vm.$root.local]
-                    ? _vm.product["title_" + _vm.$root.local]
-                    : _vm.product["title_es"]
-                )
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v(
+              _vm._s(
+                _vm.product["title_" + _vm.$root.local]
+                  ? _vm.product["title_" + _vm.$root.local]
+                  : _vm.product["title_es"]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n        Title:  " +
-                  _vm._s(
-                    _vm.product["title_" + _vm.$root.local]
-                      ? _vm.product["title_" + _vm.$root.local]
-                      : _vm.product["title_es"]
-                  )
-              ),
-              _c("br"),
-              _vm._v("\n        Code:   " + _vm._s(_vm.product.product_code)),
-              _c("br"),
-              _vm._v(
-                "\n        Desc:   " +
-                  _vm._s(
-                    _vm.product["desc_" + _vm.$root.local]
-                      ? _vm.product["desc_" + _vm.$root.local]
-                      : _vm.product["desc_es"]
-                  )
-              ),
-              _c("br")
-            ])
+            )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "p-2" },
-            _vm._l(_vm.product.attributes, function(att) {
-              return _c("div", {}, [
-                _c("h5", [_vm._v(_vm._s(att.attribute.name_es))]),
-                _vm._v(" "),
-                _c("h5", [_vm._v(_vm._s(att.value))])
+          _c("div", { staticClass: "card-body" }, [
+            _c("a", { attrs: { href: "../showProduct/" + _vm.product.id } }, [
+              _c("h6", [
+                _vm._v(
+                  "Title:  " +
+                    _vm._s(
+                      _vm.product["title_" + _vm.$root.local]
+                        ? _vm.product["title_" + _vm.$root.local]
+                        : _vm.product["title_es"]
+                    )
+                )
+              ]),
+              _vm._v(" "),
+              _c("h6", [_vm._v("Code:   " + _vm._s(_vm.product.product_code))]),
+              _vm._v(" "),
+              _c("h6", [
+                _vm._v(
+                  "Desc:   " +
+                    _vm._s(
+                      _vm.product["desc_" + _vm.$root.local]
+                        ? _vm.product["desc_" + _vm.$root.local]
+                        : _vm.product["desc_es"]
+                    )
+                )
               ])
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _vm.product.has_image
-            ? _c(
-                "div",
-                {},
-                _vm._l(_vm.product.files, function(file) {
-                  return _vm.checkFileType(file.file_path) == "img"
-                    ? _c("img", {
-                        attrs: {
-                          width: "100%",
-                          src:
-                            _vm.filePath + "product_images/" + file.file_path,
-                          alt: ""
-                        }
-                      })
-                    : _vm._e()
-                }),
-                0
-              )
-            : _c("div", {}, [
-                _c("img", {
-                  attrs: { src: "../../images/default.jpeg", alt: "" }
-                })
-              ])
+            ]),
+            _vm._v(" "),
+            _vm.product.has_image
+              ? _c(
+                  "div",
+                  {},
+                  _vm._l(_vm.product.files, function(file) {
+                    return _vm.checkFileType(file.file_path) == "img"
+                      ? _c("img", {
+                          attrs: {
+                            width: "100%",
+                            src:
+                              _vm.filePath + "product_images/" + file.file_path,
+                            alt: ""
+                          }
+                        })
+                      : _vm._e()
+                  }),
+                  0
+                )
+              : _c("div", {}, [
+                  _c("img", {
+                    attrs: { src: "../../images/default.jpeg", alt: "" }
+                  })
+                ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "p-2" },
+              _vm._l(_vm.product.attributes, function(att) {
+                return att.attribute.filterable
+                  ? _c("div", {}, [
+                      _c("h6", [
+                        _c("strong", [
+                          _vm._v(" " + _vm._s(att.attribute.name_es) + " ")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("h6", [_vm._v(_vm._s(att.value))])
+                    ])
+                  : _vm._e()
+              }),
+              0
+            )
+          ])
         ])
       ])
     ],
@@ -72785,7 +72803,7 @@ var render = function() {
       "form",
       {
         staticClass: "form-inline my-2 my-lg-0",
-        attrs: { id: "searchForm", action: "", method: "get" },
+        attrs: { id: "searchForm", action: _vm.consulturl, method: "get" },
         on: { submit: _vm.validateSearch }
       },
       [
@@ -72837,6 +72855,29 @@ var render = function() {
     "div",
     {},
     [
+      _c("p", [
+        _vm._v(
+          "\n    " +
+            _vm._s(
+              _vm.category.get_top_categories["title_" + _vm.$root.local]
+                ? _vm.category.get_top_categories["title_" + _vm.$root.local]
+                : _vm.category.get_top_categories["title_es"]
+            ) +
+            " -->\n    " +
+            _vm._s(
+              _vm.category["title_" + _vm.$root.local]
+                ? _vm.category["title_" + _vm.$root.local]
+                : _vm.category["title_es"]
+            ) +
+            "\n    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Productos Encontrados : "),
+        _c("span", { domProps: { innerHTML: _vm._s(_vm.totalRows) } })
+      ]),
+      _vm._v(" "),
       _c("filter-menu", {
         attrs: { country: this.country, category: this.category },
         on: { filter: _vm.filterProducts }

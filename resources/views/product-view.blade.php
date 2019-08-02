@@ -13,9 +13,9 @@ if ($product->has_cad_3d) {
 }
 
 $lang=App::getLocale();
-if ($lang== 'pt-BR') {
-  $lang='pt';
-}
+// if ($lang== 'pt-BR') {
+//   $lang='pt';
+// }
 @endphp
 
 @section('content')
@@ -84,10 +84,9 @@ if ($lang== 'pt-BR') {
                     <b-button v-b-modal.modal-1>Solicitar Presupuesto</b-button>
                     <b-modal id="modal-1" title="Micro" :hide-footer="true" >
                       <contact-mail-form
-                      :locale='{!! json_encode(App::getLocale()) !!}'
                       :modal="'modal-1'"
                       :title="'Contactenos para solicitar un presupuesto'"
-                      :image='{!! ($product->has_image)?json_encode(asset('storage/product_images/'.$files['images'][0]->file_path)):json_encode(asset('storage/product_images/'.'default.jpeg')) !!}'
+                      :image='{!! ($product->has_image)?json_encode(asset('storage/product_images/'.$files['images'][0]->file_path)):json_encode(asset('images/'.'default.jpeg')) !!}'
                       :department="'micro@com.com'"
                       :data='{!! json_encode($data=['product'=>$product, 'user'=>Auth::user()]) !!}'
                       ></contact-mail-form>
@@ -117,13 +116,21 @@ if ($lang== 'pt-BR') {
 
           <div class="tab-pane fade" id="viewers" role="tabpanel" aria-labelledby="contact-tab">{{-- {{asset('storage/cads2d/FR_QBM1_G14_5U.dwg')}} --}}
             @if ($product->has_cad_3d)
-              <iframe id="viewers" src="{{asset('Online3DViewer-master/website/index.html')}}"  width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe>
+              <iframe class="mb-3" id="viewers" src="{{asset('Online3DViewer-master/website/index.html')}}"  width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe>
+            @else
+              <div class="alert alert-info mt-3" role="alert">
+                <p>Visualizador 3D no disponible.</p>
+              </div>
             @endif
             @if ($product->has_cad_2d)
               <div id="d_container">
                 <div id="tapador">MICRO SA</div>
                 <div id="tapadorBottom"></div>
                 <iframe onload=""  id="cadView" src="//sharecad.org/cadframe/load?url=https://ayguid.github.io/tryDWG/{{$files['dxfs'][0]->file_path}}" width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe>
+              </div>
+            @else
+              <div class="alert alert-info" role="alert">
+                <p>Visualizador 2D no disponible.</p>
               </div>
             @endif
 
@@ -163,10 +170,9 @@ if ($lang== 'pt-BR') {
                       <b-button v-b-modal.modal-2>Solicitar Planos</b-button>
                       <b-modal id="modal-2" title="Micro" :hide-footer="true" >
                         <contact-mail-form
-                        :locale='{!! json_encode(App::getLocale()) !!}'
                         :modal="'modal-2'"
                         :title="'Complete el formulario para solicitar archivos CAD del producto.'"
-                        :image='{!! ($product->has_image)?json_encode(asset('storage/product_images/'.$files['images'][0]->file_path)):json_encode(asset('storage/product_images/'.'default.jpeg')) !!}'
+                        :image='{!! ($product->has_image)?json_encode(asset('storage/product_images/'.$files['images'][0]->file_path)):json_encode(asset('images/'.'default.jpeg')) !!}'
                         :department="'micro@ing.com'"
                         :data='{!! json_encode($data=['product'=>$product, 'user'=>Auth::user()]) !!}'
                         ></contact-mail-form>

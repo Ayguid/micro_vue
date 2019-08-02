@@ -19,12 +19,15 @@ $productData = json_encode(
     <div class="col-12 m-0 p-0">
       <div class="bg-info text-white p-2">
         <h4>El producto se encuentra en</h4>
+        <div class="row">
+
         @foreach ($data['product']->possibleCountries() as $country)
-          <div class="">
+          <div class="col-2">
             <input type="checkbox" name="country_id[]" value="{{$country->id}}" {{$data['product']->isInCountry($country->id)? ' checked' : '' }}>
             <label for="{{$country->country_desc}}">{{$country->country_desc}}</label>
           </div>
         @endforeach
+      </div>
       </div>
     </div>
   </div>

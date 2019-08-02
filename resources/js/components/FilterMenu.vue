@@ -58,7 +58,7 @@
 
       },
       computed:{
-        
+
       },
 
       mounted() {

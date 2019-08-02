@@ -1,6 +1,13 @@
 <template>
   <div class="">
 
+    <p>
+    {{(category.get_top_categories['title_'+$root.local])?category.get_top_categories['title_'+$root.local]:category.get_top_categories['title_es']}} -->
+    {{(category['title_'+$root.local])?category['title_'+$root.local]:category['title_es']}}
+    </p>
+
+    <p>Productos Encontrados : <span v-html="totalRows"></span> </p>
+
 
 
     <filter-menu @filter='filterProducts'
@@ -79,6 +86,8 @@ export default {
 
 
   },
+
+
 
   mounted() {
     this.fetchProducts();

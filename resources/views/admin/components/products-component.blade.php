@@ -16,7 +16,7 @@ $admin=Auth::guard('admin')->check();
     $files =$product->getFiles();
     @endphp
 
-    <div class="col-4">
+    <div class="col-4 mt-2">
 
       <h5>Titulo : {{$product-> {'title_' . $lang} ?? $product->title_es}}  </h5>
       <h6>Codigo : {{$product->product_code}}</h6>

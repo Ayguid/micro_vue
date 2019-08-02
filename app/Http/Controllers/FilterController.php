@@ -59,24 +59,6 @@ class FilterController extends Controller
 
 
 
-  //
-  // public function filterProducts(Request $request)
-  // {
-  //   return $request;
-  //   $filterAttributes=$request->atts;
-  //   $cat=Category::find($request->category_id);
-  //   $prodsInCty=$cat->productsInCountry($request->country_id);
-  //   foreach ($filterAttributes as $key => $value) {
-  //     if ($value != 'null') {
-  //       $filterProducts = $prodsInCty->whereHas('attributes', function($q) use($key, $value){
-  //         $q->where('attribute_id', '=', $key)->where('value', '=', $value);
-  //       });
-  //     }
-  //   }
-  //   return response()->json($filterProducts->paginate(5));
-  // }
-
-
 
 
 }

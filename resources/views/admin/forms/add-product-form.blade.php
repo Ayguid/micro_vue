@@ -11,13 +11,15 @@
     <div class="col-12 m-0 p-0">
     <div class="bg-info text-white p-2">
   <h4>El producto se encuentra en</h4>
+  <div class="row">
 
   @foreach ($prod->possibleCountries() as $country)
-    <div class="">
+    <div class="col-2">
       <input checked type="checkbox" name="country_id[]" value="{{$country->id}}">
       <label for="{{$country->country_desc}}">{{$country->country_desc}}</label>
     </div>
   @endforeach
+</div>
 </div>
 </div>
 </div>

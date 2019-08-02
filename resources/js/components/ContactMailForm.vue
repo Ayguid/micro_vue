@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-6">
           <input type="email" name="to" :value="this.department" hidden>
-          <input type="text" name="locale" :value="this.locale" hidden>
+          <input type="text" name="locale" :value="$root.local" hidden>
           <input type="text" name="product" :value="JSON.stringify(this.data.product)" hidden>
           <h5>Product Title</h5>
           <p>{{this.data.product.title_es}}</p>

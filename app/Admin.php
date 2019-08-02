@@ -5,6 +5,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\AdminResetPasswordNotification;
+use App\Models440\Country;
 
 class Admin extends Authenticatable
 {
@@ -18,7 +19,7 @@ class Admin extends Authenticatable
   protected $guard = 'admin';
 
   protected $fillable = [
-    'name', 'email', 'password','job_title',
+    'name', 'email', 'password', 'country_id', 'contactable', 'job_title',
   ];
 
   /**
@@ -39,10 +40,23 @@ class Admin extends Authenticatable
     'email_verified_at' => 'datetime',
   ];
 
+  public function country()
+  {
+    return $this->belongsTo(Country::class);
+  }
 
   public function sendPasswordResetNotification($token)
   {
     $this->notify(new AdminResetPasswordNotification($token));
+  }
+
+
+  public function possibleJobTitles()
+  {
+    return [
+      ['abbr'=>'ing','name'=>'Ingenieria', 'id'=>'1'],
+      ['abbr'=>'com','name'=>'Comercial', 'id'=>'2'],
+    ];
   }
 
 

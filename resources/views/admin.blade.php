@@ -52,7 +52,6 @@
                       @endforeach
                     </div>
                     </div>
-
                     <p>
                       <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         Agregar Categoria
@@ -63,56 +62,26 @@
                         @include('admin.forms.category-form')
                       </div>
                     </div>
-
-
-
                   </div>
                 </div>
               </div>
+
+
               <div class="card">
-                <div class="card-header" id="headingTwo">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      Buscar producto
-                    </button>
-                  </h5>
-                </div>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                  <div class="card-body">
-
-                    <form action="{{route('adminFindProduct')}}" method="get" class="form-inline">
-                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="string">
-                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-
-                  </div>
+                <div class="card-header" id="headingOne">
+                      <a href="{{route('adminProfiles')}}">Administrar Admin Profiles</a>
                 </div>
               </div>
-              {{-- <div class="card">
-                <div class="card-header" id="headingThree">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                      Administrar un país
-                    </button>
-                  </h5>
-                </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                  <div class="card-body">
 
-                    @foreach (App\Models440\Country::all() as $country)
-                      <a href="#" class="btn btn-primary">{{$country->country_desc}}</a>
-                    @endforeach
-
-                  </div>
-                </div>
-              </div> --}}
 
             </div>
 
-
-            <div class="">
-              <a href="{{route('fileManager')}}">Media Manager</a>
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <a href="{{route('fileManager')}}">Media Manager</a>
+              </div>
             </div>
+
 
           </div>
         </div>

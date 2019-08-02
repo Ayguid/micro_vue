@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
       @if ($category->parent_id)
-        <a class="btn btn-primary" href="{{route('showCategory', $category->parent_id)}}">{{$category->father()->first()->title_es}}</a>
+        <a class="" href="{{route('showCategory', $category->parent_id)}}">{{$category->father()->first()->title_es}}</a>
       @endif
       <div class="col-md-6 col-md-offset-3">
         @if(Session::has('alert-success'))
@@ -13,11 +13,13 @@
           <div class="alert alert-danger"><i class="fa fa-times" aria-hidden="true"></i> <strong>{!! session('alert-danger') !!}</strong></div>
         @endif
       </div>
-      <h3>Edit Category</h3>
+      <h5>Edit Category</h5>
       @isset($category)
 
 
-        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+        <a href="{{ url()->previous() }}" class="">Back</a>
+
+        <h3 class="text-center">{{$category->title_es}}</h3>
 
 
       @include('admin.forms.category-edit-form')

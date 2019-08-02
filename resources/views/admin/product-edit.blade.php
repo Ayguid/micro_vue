@@ -16,18 +16,17 @@
     {{-- {{$product}} --}}
 
     @php
-    $product = $data['product'];
-    $productFiles = $product->files;
+
     $productData = json_encode(
-      ['product'=>$product,
-      'productFiles'=>$productFiles]
+      ['product'=>$data['product'],
+      'productFiles'=>$data['product']->files]
     );
     @endphp
     <drop-zone :data="{{$productData}}"></drop-zone>
     @include('admin.forms.product-edit-form')
 
 
-    <form id="deleteProductForm" class="" action="{{route('destroyProduct', $product->id)}}" method="post">
+    <form id="deleteProductForm" class="" action="{{route('destroyProduct', $data['product'])}}" method="post">
       @csrf
       <input name="_method" type="hidden" value="DELETE">
       <button class="btn btn-danger" type="submit" name="button">ELIMINAR PRODUCTO</button>

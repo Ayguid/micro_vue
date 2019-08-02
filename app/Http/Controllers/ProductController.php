@@ -243,13 +243,27 @@ class ProductController extends Controller
   }
 
 
+
+
   public function find(Request $request)
   {
-    $products=Product::where('product_code', 'like', '%' . $request->string. '%' )->paginate(5);
+    $products = Product::where('product_code', 'LIKE', '%'.$request->string.'%')
+    ->orWhere('title_es', 'LIKE', '%'.$request->string.'%')
+    ->orWhere('desc_es', 'LIKE', '%'.$request->string.'%')
+    ->orWhere('title_en', 'LIKE', '%'.$request->string.'%')
+    ->orWhere('desc_en', 'LIKE', '%'.$request->string.'%')
+    ->orWhere('title_pt', 'LIKE', '%'.$request->string.'%')
+    ->orWhere('desc_pt', 'LIKE', '%'.$request->string.'%')
+    ->with('files', 'category.getTopCategories', 'attributes.attribute')
+    ->paginate(5);
     $data=[
       'products'=>$products
     ];
-    return view('admin.products-view')->with('data', $data);
+    if ($products->total()==0) {
+      return response('Not found', 200);
+    }else {
+      return view('admin.products-view')->with('data', $data);
+    }
   }
 
 
