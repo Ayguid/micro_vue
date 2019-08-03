@@ -9,87 +9,87 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
+  /**
+  * Create a new controller instance.
+  *
+  * @return void
+  */
+  public function __construct()
+  {
+    $this->middleware('auth:admin');
+  }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('admin');
-    }
-
-
+  /**
+  * Show the application dashboard.
+  *
+  * @return \Illuminate\Contracts\Support\Renderable
+  */
+  public function index()
+  {
+    return view('admin');
+  }
 
 
-    public function adminProfiles()
-    {
-      $data['admins']=Admin::all();
-      return view('admin.profiles-view')->with('data', $data);
-    }
 
-    public function addAdmin(Request $request)
-    {
-      $validator = Validator::make($request->all(), [
-        'email' => 'unique:admins',
-        'password' => ['required', 'string', 'min:8', 'confirmed'],
-      ]);
-        if(!$validator->fails()){
+
+  public function adminProfiles()
+  {
+    $data['admins']=Admin::all();
+    return view('admin.profiles-view')->with('data', $data);
+  }
+
+  public function addAdmin(Request $request)
+  {
+    $validator = Validator::make($request->all(), [
+      'email' => 'unique:admins',
+      'password' => ['required', 'string', 'min:8', 'confirmed'],
+    ]);
+    if(!$validator->fails()){
 
       Admin::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'job_title' => $request['job_title'],
-                'country_id' => $request['country_id'],
-                'contactable' => $request['contactable'],
-                'password' => Hash::make($request['password']),
+        'name' => $request['name'],
+        'email' => $request['email'],
+        'job_title' => $request['job_title'],
+        'country_id' => $request['country_id'],
+        'contactable' => $request['contactable'],
+        'password' => Hash::make($request['password']),
       ]);
       return redirect()->route('adminProfiles');
     }else {
       $request->session()->flash('alert-danger', 'Oops there was a problem!');
       return redirect()->back()->withInput($request->all())->withErrors($validator);
     }
-    }
+  }
 
 
-    public function editAdmin($id)
-    {
-      $adminProfile = Admin::find($id);
-      $data['adminProfile']=$adminProfile;
-      return view('admin.profile-edit')->with('data', $data);
-    }
+  public function editAdmin($id)
+  {
+    $adminProfile = Admin::find($id);
+    $data['adminProfile']=$adminProfile;
+    return view('admin.profile-edit')->with('data', $data);
+  }
 
 
 
-    public function updateAdmin(Request $request)
-    {
-      $adminProfile = Admin::find($request->admin_id);
+  public function updateAdmin(Request $request)
+  {
+    $adminProfile = Admin::find($request->admin_id);
+    $rules=[
+      'email'=>'required'
+    ];
+    if ($request->email!==$adminProfile->email) {
       $rules=[
-        'email'=>'required'
+        'email'=>'unique:admins'
       ];
-      if ($request->email!==$adminProfile->email) {
-        $rules=[
-          'email'=>'unique:admins'
-        ];
-      }
+    }
 
-      $validator = Validator::make($request->all(), [
-        'email' => $rules,
-      ]);
+    $validator = Validator::make($request->all(), [
+      'email' => $rules['email'],
+    ]);
 
 
-      if (!$validator->fails()) {
-        // code...
+    if (!$validator->fails()) {
+      // code...
       ($request['contactable'])?$request['contactable']:$request['contactable']=null;
 
       $adminProfile->update($request->all());
@@ -105,8 +105,8 @@ class AdminController extends Controller
       $request->session()->flash('alert-danger', 'Oops there was a problem!');
       return redirect()->back()->withInput($request->all())->withErrors($validator);
     }
-      // return view('admin.profile-edit')->with('data', $data);
-    }
+    // return view('admin.profile-edit')->with('data', $data);
+  }
 
 
 

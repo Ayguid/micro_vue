@@ -2032,33 +2032,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['country', 'category'],
+  props: ['country', 'menudata'],
   data: function data() {
-    return {
-      url: 'api/',
-      categoryatts: ''
-    };
+    return {};
   },
   methods: {
     emitFilterForm: function emitFilterForm() {
       var form = document.getElementById('filterForm');
       this.$emit('filter', form);
-    },
-    getCatAttributes: function getCatAttributes() {
-      var obj = this;
-      axios.get(this.url + 'getMenu?country_id=' + this.country.id + '&category_id=' + this.category.id).then(function (response) {
-        // handle success
-        obj.categoryatts = response.data.attributes;
-      })["catch"](function (error) {// handle error
-      })["finally"](function () {// always executed
-      });
-    },
-    find: function find() {}
+    }
   },
   computed: {},
-  mounted: function mounted() {
-    this.getCatAttributes();
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -2217,15 +2202,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['country', 'category'],
   data: function data() {
@@ -2234,18 +2210,23 @@ __webpack_require__.r(__webpack_exports__);
       perPage: 0,
       currentPage: 1,
       totalRows: '',
-      atts: ''
+      filterAtts: '',
+      menuData: ''
     };
   },
   methods: {
     fetchProducts: function fetchProducts() {
       var _this = this;
 
-      axios.get('api/getProducts/' + this.country.id + '/' + this.category.id + '/' + this.atts + '/' + '?page=' + this.currentPage).then(function (response) {
-        _this.products = response.data.data;
-        _this.perPage = response.data.per_page;
-        _this.totalRows = response.data.total;
-        console.log(response);
+      axios.get('api/getProducts/' + this.country.id + '/' + this.category.id + '/' + this.filterAtts + '/' + '?page=' + this.currentPage).then(function (response) {
+        console.log(response); // if (!this.filterAtts) {
+        //   this.menuData=response.data.menuData;
+        // }
+
+        _this.menuData = response.data.menuData;
+        _this.products = response.data.products.data;
+        _this.perPage = response.data.products.per_page;
+        _this.totalRows = response.data.products.total;
       });
     },
     changePage: function changePage(value) {
@@ -2254,7 +2235,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     filterProducts: function filterProducts(obj) {
       this.currentPage = 1;
-      this.atts = this.toJSONString(obj);
+      this.filterAtts = this.toJSONString(obj);
       this.fetchProducts();
     },
     toJSONString: function toJSONString(form) {
@@ -72602,48 +72583,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", {}, [
+  return _c("div", { staticClass: "row" }, [
     _c(
       "form",
       {
-        staticClass: "form-inline",
+        staticClass: "form-inline col-12 m-0 p-0",
         attrs: { id: "filterForm" },
         on: { change: _vm.emitFilterForm }
       },
-      _vm._l(this.categoryatts, function(catAtt) {
-        return _c("div", { staticClass: "input-group mb-3 col-3" }, [
-          _c("div", { staticClass: "input-group-prepend" }, [
+      _vm._l(_vm.menudata.attributes, function(catAtt) {
+        return _c("div", { staticClass: "mb-3 col-3" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("div", { staticClass: "input-group-prepend" }, [
+              _c(
+                "label",
+                { staticClass: "input-group-text ", attrs: { for: "" } },
+                [
+                  _vm._v(
+                    "\n           " +
+                      _vm._s(
+                        catAtt["name_" + _vm.$root.local]
+                          ? catAtt["name_" + _vm.$root.local]
+                          : catAtt["name_es"]
+                      ) +
+                      "\n         "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c(
-              "label",
-              { staticClass: "input-group-text ", attrs: { for: "" } },
+              "select",
+              { staticClass: "custom-select", attrs: { name: catAtt.id } },
               [
-                _vm._v(
-                  "\n           " +
-                    _vm._s(
-                      catAtt["name_" + _vm.$root.local]
-                        ? catAtt["name_" + _vm.$root.local]
-                        : catAtt["name_es"]
-                    ) +
-                    "\n         "
-                )
-              ]
+                _c("option", { attrs: { value: "null" } }, [_vm._v("--")]),
+                _vm._v(" "),
+                _vm._l(catAtt.uniqueValues, function(catVal) {
+                  return _c(
+                    "option",
+                    {
+                      attrs: { disabled: catVal.disabled },
+                      domProps: { value: catVal.value }
+                    },
+                    [
+                      _vm._v(
+                        "\n           " + _vm._s(catVal.value) + "\n         "
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            { staticClass: "custom-select", attrs: { name: catAtt.id } },
-            [
-              _c("option", { attrs: { value: "null" } }, [_vm._v("--")]),
-              _vm._v(" "),
-              _vm._l(catAtt.uniqueValues, function(catVal) {
-                return _c("option", { domProps: { value: catVal.value } }, [
-                  _vm._v("\n           " + _vm._s(catVal.value) + "\n         ")
-                ])
-              })
-            ],
-            2
-          )
+          ])
         ])
       }),
       0
@@ -72855,7 +72847,7 @@ var render = function() {
     "div",
     {},
     [
-      _c("p", [
+      _c("p", { staticClass: "mt-2 mb-2" }, [
         _vm._v(
           "\n    " +
             _vm._s(
@@ -72868,18 +72860,21 @@ var render = function() {
               _vm.category["title_" + _vm.$root.local]
                 ? _vm.category["title_" + _vm.$root.local]
                 : _vm.category["title_es"]
-            ) +
-            "\n    "
+            )
         )
       ]),
       _vm._v(" "),
-      _c("p", [
+      _c("p", {}, [
         _vm._v("Productos Encontrados : "),
         _c("span", { domProps: { innerHTML: _vm._s(_vm.totalRows) } })
       ]),
       _vm._v(" "),
       _c("filter-menu", {
-        attrs: { country: this.country, category: this.category },
+        attrs: {
+          country: this.country,
+          category: this.category,
+          menudata: this.menuData
+        },
         on: { filter: _vm.filterProducts }
       }),
       _vm._v(" "),
@@ -72895,7 +72890,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.totalRows > 1
+      _vm.totalRows > _vm.perPage
         ? _c(
             "div",
             { staticClass: "row" },

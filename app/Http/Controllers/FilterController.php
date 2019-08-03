@@ -10,51 +10,69 @@ use App\Models440\Product_Attribute;
 class FilterController extends Controller
 {
 
-  public function findAttributes(Request $request)
+
+  public function findProducts(Request $request, $ctyId, $catId, $filterAtts=false)
   {
-    $menuObj = new \stdClass;
-    $uniqueAtts= Product_Attribute::join('products', 'products.id', '=', 'products_attributes.product_id')
-    ->where('products.category_id', '=', $request->category_id)
-    ->join('products_in_countries', 'products.id', '=', 'products_in_countries.product_id')
-    ->where('products_in_countries.country_id', '=', $request->country_id)
-    ->join('attributes', 'products_attributes.attribute_id', '=', 'attributes.id')
-    ->where('attributes.filterable' , "=", '1')
-    ->select('products_attributes.*')->get()
-    ->unique('attribute_id');
-    foreach ($uniqueAtts as $key=> $att) {
-      $menuObj->attributes[$key] = $att->attribute;
-      $menuObj->attributes[$key]->uniqueValues=$att->uniquePossibleValues($request->category_id, $request->country_id);
-    }
-    return response()->json($menuObj);
-  }
-
-
-
-
-  public function findProducts($ctyId, $catId, $atts=false)
-  {
-    $count=0;
     $cat=Category::find($catId);
-    if (!$atts) {
-      $prods = $cat->productsInCountry($ctyId)->with('files', 'attributes.attribute')->paginate(3);
-      return response()->json($prods);
+    $menuObj = new \stdClass;
+    $prods = $cat->productsInCountry($ctyId);
+    if (!$filterAtts) {
+      $uniqueAtts= Product_Attribute::join('products', 'products.id', '=', 'products_attributes.product_id')
+      ->where('products.category_id', '=', $catId)
+      ->join('products_in_countries', 'products.id', '=', 'products_in_countries.product_id')
+      ->where('products_in_countries.country_id', '=', $ctyId)
+      ->join('attributes', 'products_attributes.attribute_id', '=', 'attributes.id')
+      ->where('attributes.filterable' , "=", '1')
+      ->select('products_attributes.*')->get()
+      ->unique('attribute_id');
+      foreach ($uniqueAtts as $key=> $att) {
+        $menuObj->attributes[$key] = $att->attribute;
+        $menuObj->attributes[$key]->uniqueValues=$att->uniquePossibleValues($catId, $ctyId);
+      }
     }
     else{
-      $prods = $cat->productsInCountry($ctyId);
-      foreach (json_decode($atts, TRUE) as $key => $value) {
-          if ($value != 'null') {
-            $count++;
-            $prodsOk = $prods->whereHas('attributes', function($q) use($key, $value){
-              $q->where('attribute_id', '=', $key)->where('value', '=', $value);
-            });
+
+      $uniqueAtts=collect();
+      foreach (json_decode($filterAtts, TRUE) as $key => $value) {
+        $prodAtt=Product_Attribute::where('attribute_id', $key)->first();
+        $uniqueAtts->add($prodAtt);
+        if ($value != 'null') {
+          $prods = $prods->whereHas('attributes', function($q) use($key, $value){
+            $q->where('attribute_id', '=', $key)->where('value', '=', $value);
+          });
+        }
+      }
+      foreach ($uniqueAtts as $key=> $att) {
+        $menuObj->attributes[$key] = $att->attribute;
+        $menuObj->attributes[$key]->uniqueValues=$att->uniquePossibleValues($catId, $ctyId);
+      }
+
+      // $arrayTest=collect();
+      foreach ($uniqueAtts as $at) {    //Attributo por unique attributos
+        foreach ($prods->get() as $prod) {   // Por cada producto
+          $prodVal = $prod->attributeValue($at->attribute_id);    //Valor que tiene el product.attribute para el attributo de primer paso
+          foreach ($menuObj->attributes as $menAtt) {   //Recorre el menu original por casa attributo
+            if ($menAtt->id==$at->attribute_id) {    //  Attributo del menu->id == el product.attribute-> de $prodVal dos pasos arriba
+              foreach ($menAtt->uniqueValues as $menuVal) {   //Recorre cada attibuto del menu original y trae todos los posibles valores
+                if ($menuVal->value==$prodVal->value) { //SHOW
+                  $menuVal->show=true;  //Se lo Saco para SHOW
+                  $menuVal->disabled=false;  //Se lo Saco para SHOW
+                }
+                if (!$menuVal->show) {
+                  $menuVal->disabled=true;    //No tenes disable? Te lo pongo
+                }
+                // $arrayTest->add($menuVal);
+              }
+            }
           }
         }
-        if ($count==0) {
-          $prodsOk=$prods;
-        }
-        return response()->json($prodsOk->with('files', 'attributes.attribute')->paginate(3));
+      }
+      // return response()->json($arrayTest);
     }
-
+    return response()->json([
+      'products'=>$prods->with('files', 'attributes.attribute')->paginate(4),
+      'menuData'=>$menuObj
+    ]);
   }
 
 

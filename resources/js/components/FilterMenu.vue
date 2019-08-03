@@ -1,21 +1,21 @@
 <template>
-    <div class="">
+    <div class="row">
 
-
-         <form id="filterForm" class="form-inline" @change="emitFilterForm">
-
-         <div v-for="catAtt in this.categoryatts" class="input-group mb-3 col-3">
+         <form id="filterForm" class="form-inline col-12 m-0 p-0" @change="emitFilterForm">
+         <div v-for="catAtt in menudata.attributes" class="mb-3 col-3">
+           <div class="input-group">
            <div class="input-group-prepend">
              <label class="input-group-text " for="">
                {{(catAtt['name_'+$root.local])?catAtt['name_'+$root.local]:catAtt['name_es']}}
              </label>
            </div>
            <select class="custom-select" :name="catAtt.id" >
-             <option value="null" class="">--</option>
-             <option v-for="catVal in catAtt.uniqueValues"  :value="catVal.value" class="">
+             <option value="null" class="" >--</option>
+             <option v-for="catVal in catAtt.uniqueValues"  :value="catVal.value" class="" :disabled="catVal.disabled" >
                {{catVal.value}}
              </option>
            </select>
+         </div>
          </div>
        </form>
 
@@ -25,36 +25,16 @@
 
 <script>
     export default {
-      props:['country', 'category'],
+      props:['country','menudata'],
       data(){
         return  {
-          url:'api/',
-          categoryatts:'',
         }
       },
       methods:{
         emitFilterForm:function(){
           var form = document.getElementById('filterForm');
-          this.$emit('filter', form)
+          this.$emit('filter', form);
         },
-        getCatAttributes:function(){
-          var obj = this;
-          axios.get(this.url+'getMenu?country_id='+this.country.id+'&category_id='+this.category.id)
-          .then(function (response) {
-            // handle success
-            obj.categoryatts= response.data.attributes;
-          })
-          .catch(function (error) {
-            // handle error
-          })
-          .finally(function () {
-            // always executed
-          });
-        },
-        find:function(){
-
-        }
-
 
       },
       computed:{
@@ -62,7 +42,6 @@
       },
 
       mounted() {
-        this.getCatAttributes();
       }
     }
 </script>
