@@ -61,6 +61,7 @@ const app = new Vue({
     data(){
       return  {
         local:(document.documentElement.lang=='pt-BR')?'pt':document.documentElement.lang,
+        baseUrl:window.axios.defaults.baseURL
       }
     },
     mounted(){

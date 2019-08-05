@@ -50,7 +50,6 @@
     methods:{
       fetchProducts:function(){
         axios.get('api/getProducts/'+this.country.id+'/'+this.category.id+'/'+this.filterAtts+'/'+'?page='+this.currentPage).then((response) => {
-          console.log(response);
           // if (!this.filterAtts) {
           //   this.menuData=response.data.menuData;
           // }
