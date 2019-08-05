@@ -29,7 +29,6 @@ function(){
   //
   Route::get('/showProduct/{id}', 'LandingController@showProduct')->name('showProduct');
   Route::get('/searchProduct/{q?}','LandingController@find')->name('userFindProduct');
-  // Route::get('/downloadFile/{path}', 'LandingController@downloadFile')->name('downloadFile');
   //
   Auth::routes();
   Route::get('/home', 'HomeController@index')->name('home');
@@ -74,7 +73,11 @@ function(){
 
     //media
     Route::get('/files','FileController@index')->name('fileManager');
-
   });
+
+
+
+  //grl stuff
+  Route::post('/send-mail', 'mailer\MailerController@sendMail')->name('sendIngMail');
 
 });

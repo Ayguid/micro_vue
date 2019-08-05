@@ -19,15 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //filter api
 Route::get('/getProducts/{ctyId}/{catId}/{filterAtts?}', 'FilterController@findProducts');
-// Route::get('/filterProducts', 'FilterController@filterProducts');
-// Route::get('/filterSearch', 'FilterController@findResults');
 
 
 
+//media manager
 Route::post('/files/upload', 'FileController@upload');
-// Route::post('/files/destroy/{string}', 'FileController@destroy');
 Route::post('/files/destroy/{string?}', 'FileController@destroy');
-
-
-//mails
-Route::post('/send-mail', 'mailer\MailerController@sendMail')->name('sendIngMail');

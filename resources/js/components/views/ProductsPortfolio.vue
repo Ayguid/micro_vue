@@ -1,3 +1,8 @@
+
+
+
+
+
 <template>
   <div class="">
 
@@ -76,7 +81,7 @@
             obj[ name ] = value;
           }
         }
-        return JSON.stringify( obj );
+        return JSON.stringify(obj);
       }
     },
 

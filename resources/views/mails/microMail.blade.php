@@ -1,7 +1,13 @@
 @component('mail::message')
 Te esta contactando **{{$fromMail}}**,
  {{-- use double space for line break --}}
-Para : **{{$toMail}}**
+Para : @foreach ($toMail as $key => $eachToMail)
+  @if ($key==0)
+    **{{$eachToMail->email}}**
+    @else
+      **, {{$eachToMail->email}}**
+  @endif
+@endforeach
 
 {{-- **{{$product}}** --}}
 @isset($product)
@@ -20,7 +26,7 @@ Para : **{{$toMail}}**
 
 
 **<p>
-  Comentarios: 
+  Comentarios:
   {{$textArea}}
 </p>**
 

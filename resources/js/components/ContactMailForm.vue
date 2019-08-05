@@ -8,8 +8,7 @@
 
       <div class="row">
         <div class="col-6">
-          <input type="email" name="to" :value="this.department" hidden>
-          <input type="text" name="locale" :value="$root.local" hidden>
+          <input type="text" name="to" :value="this.to" hidden>
           <input type="text" name="product" :value="JSON.stringify(this.data.product)" hidden>
           <h5>Product Title</h5>
           <p>{{this.data.product.title_es}}</p>
@@ -76,10 +75,10 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 
 export default {
-  props: ['data', 'department', 'image', 'title', 'modal', 'locale'],
+  props: ['data', 'to', 'image', 'title', 'modal'],
   data(){
     return  {
-      contactUrl:'/api/send-mail/',
+      contactUrl:this.$root.local+'/send-mail',
       isLoading: false,
       fullPage: true,
     }
@@ -96,8 +95,8 @@ export default {
       var formData = new FormData(event.target);
       this.isLoading = true;
       axios.post(this.contactUrl,formData).then((response) => {
-        this.isLoading = false;
         console.log(response);
+        this.isLoading = false;
         if (response.data.status == "error") {
           this.$swal({
             type: 'warning',

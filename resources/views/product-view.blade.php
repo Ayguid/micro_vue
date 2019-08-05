@@ -87,7 +87,7 @@ $lang=App::getLocale();
                       :modal="'modal-1'"
                       :title="'Contactenos para solicitar un presupuesto'"
                       :image='{!! ($product->has_image)?json_encode(asset('storage/product_images/'.$files['images'][0]->file_path)):json_encode(asset('images/'.'default.jpeg')) !!}'
-                      :department="'micro@com.com'"
+                      :to="'Comercial'"
                       :data='{!! json_encode($data=['product'=>$product, 'user'=>Auth::user()]) !!}'
                       ></contact-mail-form>
                     </b-modal>
@@ -173,7 +173,7 @@ $lang=App::getLocale();
                         :modal="'modal-2'"
                         :title="'Complete el formulario para solicitar archivos CAD del producto.'"
                         :image='{!! ($product->has_image)?json_encode(asset('storage/product_images/'.$files['images'][0]->file_path)):json_encode(asset('images/'.'default.jpeg')) !!}'
-                        :department="'micro@ing.com'"
+                        :to="'Ingenieria'"
                         :data='{!! json_encode($data=['product'=>$product, 'user'=>Auth::user()]) !!}'
                         ></contact-mail-form>
                       </b-modal>
