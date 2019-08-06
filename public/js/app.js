@@ -2149,7 +2149,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['consulturl'],
   data: function data() {
-    return {};
+    return {
+      query: ''
+    };
   },
   methods: {
     validateSearch: function validateSearch(event) {
@@ -2158,12 +2160,12 @@ __webpack_require__.r(__webpack_exports__);
       var query = form.elements.query.value;
 
       if (query) {
+        this.query = query;
         axios.get(this.consulturl + '/' + query).then(function (response) {
           if (response.data == 'Not found') {
             form.elements.query.value = "not found";
           } else {
             form.submit();
-            console.log(response);
           }
         })["catch"](function (error) {// handle error
         })["finally"](function () {// always executed
@@ -72889,7 +72891,11 @@ var render = function() {
       "form",
       {
         staticClass: "form-inline my-2 my-lg-0",
-        attrs: { id: "searchForm", action: _vm.consulturl, method: "get" },
+        attrs: {
+          id: "searchForm",
+          action: _vm.consulturl + "/" + _vm.query,
+          method: "get"
+        },
         on: { submit: _vm.validateSearch }
       },
       [
