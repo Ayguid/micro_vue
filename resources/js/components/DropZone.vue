@@ -45,7 +45,7 @@ export default {
       url:urlMain+'/api/files/upload',
       method: 'POST',
       paramName: "file", // The name that will be used to transfer the file
-      maxFilesize: 2, // MB
+      maxFilesize: 80, // MB
       addRemoveLinks: true,
       dictRemoveFileConfirmation:'Are you sure you want to delete this file?',
 

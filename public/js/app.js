@@ -1912,7 +1912,7 @@ var urlMain = window.axios.defaults.baseURL;
       method: 'POST',
       paramName: "file",
       // The name that will be used to transfer the file
-      maxFilesize: 2,
+      maxFilesize: 80,
       // MB
       addRemoveLinks: true,
       dictRemoveFileConfirmation: 'Are you sure you want to delete this file?',
