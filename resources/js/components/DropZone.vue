@@ -42,9 +42,10 @@ export default {
     const data = this.data;
 
     DropZone.options.dropZone = {
-      url:urlMain+'/api/files/upload/',
+      url:urlMain+'/api/files/upload',
+      method: 'POST',
       paramName: "file", // The name that will be used to transfer the file
-      maxFilesize: 80, // MB
+      maxFilesize: 2, // MB
       addRemoveLinks: true,
       dictRemoveFileConfirmation:'Are you sure you want to delete this file?',
 
