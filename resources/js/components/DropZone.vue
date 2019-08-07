@@ -48,7 +48,7 @@ export default {
       maxFilesize: 80, // MB
       addRemoveLinks: true,
       dictRemoveFileConfirmation:'Are you sure you want to delete this file?',
-
+      timeout:300000,
       init: function() {
         this.on("removedfile", function(file) {
           var formData=null;

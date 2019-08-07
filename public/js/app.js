@@ -1916,6 +1916,7 @@ var urlMain = window.axios.defaults.baseURL;
       // MB
       addRemoveLinks: true,
       dictRemoveFileConfirmation: 'Are you sure you want to delete this file?',
+      timeout: 300000,
       init: function init() {
         this.on("removedfile", function (file) {
           var formData = null;
