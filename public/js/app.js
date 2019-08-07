@@ -2157,11 +2157,11 @@ __webpack_require__.r(__webpack_exports__);
     validateSearch: function validateSearch(event) {
       event.preventDefault();
       var form = this.$el.children[0];
-      var query = form.elements.query.value;
+      var qy = form.elements.query.value;
 
-      if (query) {
-        this.query = query;
-        axios.get(this.consulturl + '/' + query).then(function (response) {
+      if (qy) {
+        this.query = qy;
+        axios.get(this.consulturl + '/' + qy).then(function (response) {
           if (response.data == 'Not found') {
             form.elements.query.value = "not found";
           } else {

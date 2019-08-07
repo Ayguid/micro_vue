@@ -126,7 +126,8 @@ $lang=App::getLocale();
               <div id="d_container">
                 <div id="tapador">MICRO SA</div>
                 <div id="tapadorBottom"></div>
-                <iframe onload=""  id="cadView" src="//sharecad.org/cadframe/load?url=https://ayguid.github.io/tryDWG/{{$files['dxfs'][0]->file_path}}" width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe>
+                {{-- <iframe onload=""  id="cadView" src="//sharecad.org/cadframe/load?url=https://ayguid.github.io/tryDWG/{{$files['dxfs'][0]->file_path}}" width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe> --}}
+                <iframe onload=""  id="cadView" src="//sharecad.org/cadframe/load?url={{asset('storage/pdfs/'.$files['dxfs'][0]->file_path)}}" width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe>
               </div>
             @else
               <div class="alert alert-info" role="alert">
