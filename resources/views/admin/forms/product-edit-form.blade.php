@@ -77,29 +77,25 @@ $productData = json_encode(
         <div class="row">
 
           @foreach ($data['original_cat']->attributes()->get() as $attr)
-            <div class="form-group col-6">
+            <div class="form-group col-12 col-md-6 col-lg-6 col-xl-6">
 
               @php
               $value = $data['product']->attributeValue($attr->id)?$data['product']->attributeValue($attr->id)->value:'';
               @endphp
-
+              <label for="">{{$attr->name_es}}</label>
               @if ($attr->type=="textarea")
-                <label for="">{{$attr->name_es}}</label>
                 <textarea rows="8" cols="80" name="attributes[{{$attr->id}}]" value="">{{$value}}</textarea>
               @endif
               @if ($attr->type=="float")
-                <label for="">{{$attr->name_es}}</label>
                 <input class="form-control{{ $errors->has($attr->name_es) ? ' is-invalid' : '' }}"
                 type="number" step="0.1" name="attributes[{{$attr->id}}]"
                 value="{{$value}}">
               @endif
               @if ($attr->type=="string")
-                <label for="">{{$attr->name_es}}</label>
                 <input class="form-control{{ $errors->has($attr->name_es) ? ' is-invalid' : '' }}" type="text"
                 name="attributes[{{$attr->id}}]" value="{{$value}}">
               @endif
               @if ($attr->type=="password")
-                <label for="">{{$attr->name_es}}</label>
                 <input class="form-control{{ $errors->has($attr->name_es) ? ' is-invalid' : '' }}" type="password"
                 name="attributes[{{$attr->id}}]" value="{{$value}}">
               @endif

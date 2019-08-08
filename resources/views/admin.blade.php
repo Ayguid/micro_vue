@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="card">
           <div class="card-header">Admin Dashboard</div>
 
@@ -46,7 +46,7 @@
                       <div class="row">
 
                       @foreach (App\Models440\Category::all()->where('parent_id', null) as $cat)
-                        <div class="col-4 mb-2">
+                        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-2">
                           <a href="{{route('showCategory', $cat->id)}}" class="btn btn-primary btn-lg btn-block">{{$cat->title_es}}</a>
                         </div>
                       @endforeach

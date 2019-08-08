@@ -9,7 +9,7 @@
   <div class="row">
 
     <form id="filterForm" class="form-inline col-12 m-0 p-0" @change="emitFilterForm">
-      <div v-for="catAtt in menudata.attributes" class="mb-3 col-3">
+      <div v-for="catAtt in menudata.attributes" class="mb-3 col-12 col-md-4 col-lg-3">
         <div class="input-group">
           <div class="input-group-prepend">
             <label class="input-group-text " for="">

@@ -38,7 +38,7 @@
         <div class="p-3 mb-2 bg-secondary rounded">
         <div class="row">
           @foreach ($category->attributes as $attr)
-            <div class="col-3 p-2">
+            <div class="col-6 col-md-4 col-lg-3 p-2">
               <a class="text-white" href="{{route('editAttribute',$attr->id)}}">{{$attr->name_es}}</a>
               @if ($attr->filterable)
                 <img src="{{asset('icons/lens_icon.svg')}}" alt="">
@@ -57,7 +57,7 @@
           <div class="sub-cats">
           <div class="row">
             @foreach ($category->children as $child)
-              <div class="col-3 mb-2">
+              <div class="col-12 col-md-6 col-lg-4 col-xl-3 m-0 p-2">
                 <a href="{{route('showCategory', $child->id)}}" class="btn btn-primary btn-lg btn-block">{{$child->title_es}}</a>
               </div>
             @endforeach

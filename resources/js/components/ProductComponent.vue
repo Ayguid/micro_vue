@@ -1,6 +1,6 @@
 <template>
 
-  <div class="col-3">
+  <div class="col-12 col-md-4 col-lg-3">
 
     <transition name="fade"appear >
 
@@ -17,7 +17,7 @@
           <img v-for="file in product.files" width="100%" v-if="checkFileType(file.file_path)=='img'" :src="$root.baseUrl+'/storage/product_images/'+file.file_path" alt="">
         </div>
         <div v-else class="">
-          <img  :src="$root.baseUrl+'/images/default.jpeg'" alt="">
+          <img  width="100%" :src="$root.baseUrl+'/images/default.jpeg'" alt="">
         </div>
         <div class="p-2">
           <div v-for="att in product.attributes" v-if="att.attribute.filterable"  class="">

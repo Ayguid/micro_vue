@@ -20,13 +20,19 @@
 <div class="row">
 
 @foreach ($data['admins'] as $admin)
-<div class="col-3 ">
+<div class="col-12 col-md-4 col-lg-3 col-xl-3 ">
   <a href="{{route('editAdmin', $admin->id)}}">
   <div class="p-3 mb-2 bg-info text-white rounded">
   Email : {{$admin->email}}<br>
   Name : {{$admin->name}}<br>
   Rol : {{$admin->job_title}}<br>
-  Pais : {{$admin->country->country_desc ?? 'No country'}}
+  Pais : {{$admin->country->country_desc ?? 'No country'}}<br>
+  Contactable :
+  @if ($admin->contactable)
+    &#10003;
+    @else
+    &#10062;  
+  @endif
 </div>
 </a>
 </div>

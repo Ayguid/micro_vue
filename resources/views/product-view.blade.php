@@ -70,7 +70,7 @@ $lang=App::getLocale();
               @endif
 
               <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-md-4 col-lg-4">
                   @if ($product->has_image)
                     @foreach ($files['images'] as $image)
 
@@ -94,7 +94,7 @@ $lang=App::getLocale();
                   </p>
                 </div>
 
-                <div class="col-8">
+                <div class="col-12 col-md-8 col-lg-8">
 
                   <div class="row">
                     <div class="col-12">

@@ -72659,7 +72659,7 @@ var render = function() {
       },
       [
         _vm._l(_vm.menudata.attributes, function(catAtt) {
-          return _c("div", { staticClass: "mb-3 col-3" }, [
+          return _c("div", { staticClass: "mb-3 col-12 col-md-4 col-lg-3" }, [
             _c("div", { staticClass: "input-group" }, [
               _c("div", { staticClass: "input-group-prepend" }, [
                 _c(
@@ -72744,7 +72744,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "col-3" },
+    { staticClass: "col-12 col-md-4 col-lg-3" },
     [
       _c("transition", { attrs: { name: "fade", appear: "" } }, [
         _c("div", { staticClass: "card" }, [
@@ -72835,6 +72835,7 @@ var render = function() {
               : _c("div", {}, [
                   _c("img", {
                     attrs: {
+                      width: "100%",
                       src: _vm.$root.baseUrl + "/images/default.jpeg",
                       alt: ""
                     }
