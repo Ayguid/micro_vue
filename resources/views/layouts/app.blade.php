@@ -75,7 +75,7 @@
 
           <!-- Right Side Of Navbar -->
 
-          <search-component :consulturl='{{json_encode(route('userFindProduct'))}}'></search-component>
+          <search-component class="d-none d-md-block" :consulturl='{{json_encode(route('userFindProduct'))}}'></search-component>  {{--visible en vista con nav completo--}}
 
           <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
@@ -112,6 +112,7 @@
           @endguest
 
         </ul>
+        <search-component class="d-md-none" :consulturl='{{json_encode(route('userFindProduct'))}}'></search-component>  {{--visible en menu desplegable--}}
       </div>
     </div>
   </nav>

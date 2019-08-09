@@ -19,6 +19,13 @@
         <div v-else class="">
           <img  width="100%" :src="$root.baseUrl+'/images/default.jpeg'" alt="">
         </div>
+
+        <div class="">
+          <img v-if="product.has_pdf"    width="15%" :src="$root.baseUrl+'/icons/pdf_logo.svg'" alt="">
+          <img v-if="product.has_cad_2d" width="15%" :src="$root.baseUrl+'/icons/cad_logo.svg'" alt="">
+          <img v-if="product.has_zip"    width="15%" :src="$root.baseUrl+'/icons/zip_logo.svg'" alt="">
+        </div>
+
         <div class="p-2">
           <div v-for="att in product.attributes" v-if="att.attribute.filterable"  class="">
             <h6>  <strong> {{att.attribute.name_es}} </strong>  </h6>

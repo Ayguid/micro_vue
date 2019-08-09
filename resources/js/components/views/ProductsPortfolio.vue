@@ -53,6 +53,7 @@
           // if (!this.filterAtts) {
           //   this.menuData=response.data.menuData;
           // }
+          console.log(response);
           this.menuData=response.data.menuData;
           this.products = response.data.products.data;
           this.perPage = response.data.products.per_page;

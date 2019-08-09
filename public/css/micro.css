@@ -423,8 +423,8 @@ img.logo {
   background-color: rgb(255, 255, 255);
   position: absolute;
   left: 14px;
-  width: 269px;
-  top: 10%;
+  width: 254px;
+  top: 9%;
 }
 
 #tapadorBottom{
@@ -432,11 +432,22 @@ img.logo {
   background-color: white;
   position: absolute;
   right: 0;
-  width: 10%;
+  width: 33%;
   bottom: 2%;
 }
 
+@media only screen and (max-width: 400px) {
+  #tapador{
+    height: 36px;
+    left: 8px;
+    width: 260px;
+  }
+  #tapadorBottom{
+    width: 105px;
 
+  }
+
+}
 
 
 

@@ -32,15 +32,15 @@ $lang=App::getLocale();
 
     @isset($data['category'])
       <div class="row">
-        <div class="col-4">
+        <div class="col-6">
+          <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
           <h4 class="m-2">{{$category->father-> {'title_' . $lang} ?? $category->father->title_es}}->
             <a href="{{route('productsCat', $category->id)}}">
               {{$category-> {'title_' . $lang} ?? $category->title_es}}</a>
             </h4>
           </div>
-          <div class="col-3">
-            <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
-          </div>
+
+
         </div>
       @endisset
 

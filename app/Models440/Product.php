@@ -32,7 +32,7 @@ class Product extends Model
 
   public function attributes()
   {
-    return $this->hasMany(Product_Attribute::class, 'product_id', 'id');
+    return $this->hasMany(Product_Attribute::class, 'product_id', 'id')->orderBy('attribute_id');
   }
 
 
