@@ -10,10 +10,13 @@ use App\Models440\Product_Attribute;
 class FilterController extends Controller
 {
 
-  public function uniquePossibleValues($catId, $ctyId, $id)
+  public function uniquePossibleValues($catId, $ctyId, $id, $value = false)
   {
     return Product_Attribute::where('attribute_id', $id)
     ->join('products', 'products.id', '=', 'products_attributes.product_id')
+    // ->when($value, function($query) use ($value){
+    //   return $query->where('value', $value);
+    //   })
     ->where('products.category_id', '=', $catId)
     ->join('products_in_countries', 'products.id', '=', 'products_in_countries.product_id')
     ->where('products_in_countries.country_id', '=',  $ctyId)->select('products_attributes.*')->orderBy('value')
@@ -35,25 +38,23 @@ class FilterController extends Controller
       ->where('attributes.filterable' , "=", '1')
       ->select('products_attributes.*')->orderBy('attribute_id')->get()
       ->unique('attribute_id');
-      foreach ($uniqueAtts as $key=> $att) {
-        $menuObj->attributes[$key] = $att->attribute;
-        // $menuObj->attributes[$key]->uniqueValues=$att->uniquePossibleValues($catId, $ctyId);
-        $menuObj->attributes[$key]->uniqueValues=$this->uniquePossibleValues($catId, $ctyId, $att->attribute_id);
+      foreach ($uniqueAtts as $key=> $prodAtt) {
+        $menuObj->attributes[$key] = $prodAtt->attribute;
+        $menuObj->attributes[$key]->uniqueValues=$this->uniquePossibleValues($catId, $ctyId, $prodAtt->attribute_id);
       }
     }
     else{
-      // $uniqueAtts=collect();
       foreach (json_decode($filterAtts, TRUE) as $key => $value) {
         $prodAtt=Product_Attribute::where('attribute_id', $key)->first();
-        // $uniqueAtts->add($prodAtt);
         if ($value != 'null') {
           $prods = $prods->whereHas('attributes', function($q) use($key, $value){
             $q->where('attribute_id', '=', $key)->where('value', '=', $value);
           });
+        }else {
+          $value=false;
         }
           //new
           $menuObj->attributes[$key] = $prodAtt->attribute;
-          // $menuObj->attributes[$key]->uniqueValues=$prodAtt->uniquePossibleValues($catId, $ctyId, $prods);
           $menuObj->attributes[$key]->uniqueValues=$this->uniquePossibleValues($catId, $ctyId, $prodAtt->attribute_id);
           //
       }
