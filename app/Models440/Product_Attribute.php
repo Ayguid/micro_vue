@@ -18,7 +18,6 @@ class Product_Attribute extends Model
     ];
 
 
-
     public function product()
     {
       return $this->belongsTo(Product::class);
@@ -31,15 +30,16 @@ class Product_Attribute extends Model
     }
 
 
-    public function uniquePossibleValues($catId, $ctyId)
-    {
-      return $this->where('attribute_id', $this->attribute_id)
-      ->join('products', 'products.id', '=', 'products_attributes.product_id')
-      ->where('products.category_id', '=', $catId)
-      ->join('products_in_countries', 'products.id', '=', 'products_in_countries.product_id')
-      ->where('products_in_countries.country_id', '=',  $ctyId)->select('products_attributes.*')->orderBy('value')
-      ->get()->unique('value');
-    }
+    // public function uniquePossibleValues($catId, $ctyId, $prods=null)
+    // {
+    //   return $this->where('attribute_id', $this->attribute_id)
+    //   ->join('products', 'products.id', '=', 'products_attributes.product_id')
+    //   ->where('products.category_id', '=', $catId)
+    //   ->join('products_in_countries', 'products.id', '=', 'products_in_countries.product_id')
+    //   ->where('products_in_countries.country_id', '=',  $ctyId)->select('products_attributes.*')->orderBy('value')
+    //   ->get()->unique('value');
+    //   $this->active=false;
+    // }
 
 
 
