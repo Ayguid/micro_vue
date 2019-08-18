@@ -18,7 +18,8 @@
           </div>
           <select class="custom-select" :name="catAtt.id" >
             <option value="null" class="" >--</option>
-            <option v-for="catVal in catAtt.uniqueValues"  :value="catVal.value" class="" :disabled="catVal.disabled">
+            <option  v-for="catVal in catAtt.uniqueValues"  :value="catVal.value" class="" :disabled="catVal.disabled">
+            <!-- <option  v-for="catVal in catAtt.uniqueValues"  :value="catVal.value" class="" :disabled="(filterAtts)?(!catVal.disabled):catVal.disabled"> -->
               {{catVal.value}}
             </option>
           </select>
@@ -35,7 +36,7 @@
 
 <script>
 export default {
-  props:['country','menudata'],
+  props:['country','menudata', 'filterAtts'],
   data(){
     return  {
       docuForm:''

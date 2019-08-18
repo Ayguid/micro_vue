@@ -16,16 +16,19 @@
       :country="this.country"
       :category="this.category"
       :menudata="this.menuData"
+      :filterAtts="this.filterAtts"
       ></filter-menu>
 
       <div class="row">
         <product-component  v-for="product in products" :product='product' :key='product.id'></product-component>
       </div>
 
-      <div class="row" v-if="totalRows > perPage">
+      <div class="" v-if="totalRows > perPage">
         <b-pagination
         @change="changePage"
         v-model="currentPage"
+        align="center"
+        limit="10"
         :total-rows="totalRows"
         :per-page="perPage"></b-pagination>
       </div>
@@ -50,9 +53,6 @@
     methods:{
       fetchProducts:function(){
         axios.get('api/getProducts/'+this.country.id+'/'+this.category.id+'/'+this.filterAtts+'/'+'?page='+this.currentPage).then((response) => {
-          // if (!this.filterAtts) {
-          //   this.menuData=response.data.menuData;
-          // }
           console.log(response);
           this.menuData=response.data.menuData;
           this.products = response.data.products.data;
