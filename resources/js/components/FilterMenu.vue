@@ -9,8 +9,8 @@
   <div class="row">
 
     <form id="filterForm" class="form-inline col-12 m-0 p-0" @change="emitFilterForm">
-      <div v-for="catAtt in menudata.attributes" class="mb-3 col-12 col-md-4 col-lg-3">
-        <div class="input-group">
+      <div v-for="catAtt in menudata.attributes" class="mb-3 col-12 col-md-4 col-lg-3" v-show="isAllDisabled(catAtt.uniqueValues)" >
+        <div class="input-group" >
           <div class="input-group-prepend">
             <label class="input-group-text " for="">
               {{(catAtt['name_'+$root.local])?catAtt['name_'+$root.local]:catAtt['name_es']}}
@@ -18,8 +18,7 @@
           </div>
           <select class="custom-select" :name="catAtt.id" >
             <option value="null" class="" >--</option>
-            <option  v-for="catVal in catAtt.uniqueValues"  :value="catVal.value" class="" :disabled="catVal.disabled">
-            <!-- <option  v-for="catVal in catAtt.uniqueValues"  :value="catVal.value" class="" :disabled="(filterAtts)?(!catVal.disabled):catVal.disabled"> -->
+            <option v-for="catVal in catAtt.uniqueValues"  :value="catVal.value" class="" :disabled="catVal.disabled">
               {{catVal.value}}
             </option>
           </select>
@@ -49,6 +48,13 @@ export default {
     resetForm:function(){
       this.docuForm.reset();
       this.$emit('filter', this.docuForm);
+    },
+    isAllDisabled:function(uniqueValues){
+      var count = 0;
+      for (var i = 0; i < uniqueValues.length; i++) {
+        (uniqueValues[i].disabled)?count++:'';
+      }
+      return ((count-uniqueValues.length)<0)?true:false;
     }
 
   },

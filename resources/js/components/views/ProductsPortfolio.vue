@@ -33,11 +33,22 @@
         :per-page="perPage"></b-pagination>
       </div>
 
+      <div class="vld-parent">
+        <loading :active.sync="isLoading"
+        :can-cancel="false"
+        :on-cancel="onCancel"
+        :is-full-page="fullPage"></loading>
+      </div>
 
     </div>
   </template>
 
   <script>
+  // Import component
+  import Loading from 'vue-loading-overlay';
+  // Import stylesheet
+  import 'vue-loading-overlay/dist/vue-loading.css';
+
   export default {
     props:['country', 'category'],
     data(){
@@ -48,16 +59,23 @@
         totalRows:'',
         filterAtts:'',
         menuData:'',
+        isLoading: true,
+        fullPage: true,
       }
+    },
+    components: {
+      Loading
     },
     methods:{
       fetchProducts:function(){
+        this.isLoading = true;
         axios.get('api/getProducts/'+this.country.id+'/'+this.category.id+'/'+this.filterAtts+'/'+'?page='+this.currentPage).then((response) => {
           console.log(response);
           this.menuData=response.data.menuData;
           this.products = response.data.products.data;
           this.perPage = response.data.products.per_page;
           this.totalRows = response.data.products.total;
+          this.isLoading = false;
         });
       },
       changePage:function(value){
@@ -82,6 +100,9 @@
           }
         }
         return JSON.stringify(obj);
+      },
+      onCancel: function() {
+        console.log('User cancelled the loader.')
       }
     },
 

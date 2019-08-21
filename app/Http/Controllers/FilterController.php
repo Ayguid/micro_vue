@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -11,8 +10,6 @@ use App\Models440\Product;
 class FilterController extends Controller
 {
 
-
-
   public function findProducts($ctyId, $catId, $filterAtts=false)
   {
 
@@ -20,42 +17,21 @@ class FilterController extends Controller
     $cat=Category::find($catId);
     $prods = $cat->productsInCountry($ctyId);
 
-
     //Arma data para menu builder ORIGINAL
-    $productAtts=$prods
-    ->with('attributes')
-    ->get()
-    ->pluck('attributes')
-    ->flatten()
-    ->groupBy('attribute_id')
-    ->map(function ($array) {
-      return collect($array)->unique('value')->all();
-    });
-
+    $productAtts=$this->plucker($prods);
 
     // Hace el query para buscar productos que cumplan con attributes
     if ($filterAtts) {
-      $null=0;
       foreach (json_decode($filterAtts, TRUE) as $key => $value) {
         if ($value != 'null') {
           $prods = $prods->whereHas('attributes', function($q) use($key, $value){
             $q->where('attribute_id', '=', $key)->where('value', '=', $value);
           });
-        }else {
-          $null++;
         }
       }
 
       //Arma data para menu builder SHOW
-      $productAttsShow=$prods
-      ->with('attributes')
-      ->get()
-      ->pluck('attributes')
-      ->flatten()
-      ->groupBy('attribute_id')
-      ->map(function ($array) {
-        return collect($array)->unique('value')->all();
-      });
+      $productAttsShow=$this->plucker($prods);
 
       foreach ($productAtts as $key => $values) {
         foreach ($values as $v) {
@@ -75,8 +51,6 @@ class FilterController extends Controller
         }
       }
     }
-
-
     //Arma el menu con la data que le pasamos
     $menuObj = new \stdClass;
     //
@@ -91,12 +65,29 @@ class FilterController extends Controller
         $menuObj->attributes[$key]->uniqueValues=$col;
       }
     }
-
+    
     //response con todo lo necesario
     return response()->json([
       'products'=>$prods->with('files', 'attributes.attribute')->paginate(16),
       'menuData'=>$menuObj
     ]);
+  }
+
+
+
+
+
+  public function plucker($collection)
+  {
+    return $collection
+    ->with('attributes')
+    ->get()
+    ->pluck('attributes')
+    ->flatten()
+    ->groupBy('attribute_id')
+    ->map(function ($array) {
+      return collect($array)->unique('value')->all();
+    });
   }
 
 

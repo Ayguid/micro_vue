@@ -2042,7 +2042,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['country', 'menudata', 'filterAtts'],
   data: function data() {
@@ -2057,6 +2056,15 @@ __webpack_require__.r(__webpack_exports__);
     resetForm: function resetForm() {
       this.docuForm.reset();
       this.$emit('filter', this.docuForm);
+    },
+    isAllDisabled: function isAllDisabled(uniqueValues) {
+      var count = 0;
+
+      for (var i = 0; i < uniqueValues.length; i++) {
+        uniqueValues[i].disabled ? count++ : '';
+      }
+
+      return count - uniqueValues.length < 0 ? true : false;
     }
   },
   computed: {},
@@ -2197,6 +2205,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2236,6 +2248,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+// Import component
+ // Import stylesheet
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['country', 'category'],
   data: function data() {
@@ -2245,19 +2267,26 @@ __webpack_require__.r(__webpack_exports__);
       currentPage: 1,
       totalRows: '',
       filterAtts: '',
-      menuData: ''
+      menuData: '',
+      isLoading: true,
+      fullPage: true
     };
+  },
+  components: {
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   methods: {
     fetchProducts: function fetchProducts() {
       var _this = this;
 
+      this.isLoading = true;
       axios.get('api/getProducts/' + this.country.id + '/' + this.category.id + '/' + this.filterAtts + '/' + '?page=' + this.currentPage).then(function (response) {
         console.log(response);
         _this.menuData = response.data.menuData;
         _this.products = response.data.products.data;
         _this.perPage = response.data.products.per_page;
         _this.totalRows = response.data.products.total;
+        _this.isLoading = false;
       });
     },
     changePage: function changePage(value) {
@@ -2284,6 +2313,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return JSON.stringify(obj);
+    },
+    onCancel: function onCancel() {
+      console.log('User cancelled the loader.');
     }
   },
   mounted: function mounted() {
@@ -72668,53 +72700,67 @@ var render = function() {
       },
       [
         _vm._l(_vm.menudata.attributes, function(catAtt) {
-          return _c("div", { staticClass: "mb-3 col-12 col-md-4 col-lg-3" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c("div", { staticClass: "input-group-prepend" }, [
+          return _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isAllDisabled(catAtt.uniqueValues),
+                  expression: "isAllDisabled(catAtt.uniqueValues)"
+                }
+              ],
+              staticClass: "mb-3 col-12 col-md-4 col-lg-3"
+            },
+            [
+              _c("div", { staticClass: "input-group" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c(
+                    "label",
+                    { staticClass: "input-group-text ", attrs: { for: "" } },
+                    [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(
+                            catAtt["name_" + _vm.$root.local]
+                              ? catAtt["name_" + _vm.$root.local]
+                              : catAtt["name_es"]
+                          ) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
                 _c(
-                  "label",
-                  { staticClass: "input-group-text ", attrs: { for: "" } },
+                  "select",
+                  { staticClass: "custom-select", attrs: { name: catAtt.id } },
                   [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          catAtt["name_" + _vm.$root.local]
-                            ? catAtt["name_" + _vm.$root.local]
-                            : catAtt["name_es"]
-                        ) +
-                        "\n          "
-                    )
-                  ]
+                    _c("option", { attrs: { value: "null" } }, [_vm._v("--")]),
+                    _vm._v(" "),
+                    _vm._l(catAtt.uniqueValues, function(catVal) {
+                      return _c(
+                        "option",
+                        {
+                          attrs: { disabled: catVal.disabled },
+                          domProps: { value: catVal.value }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(catVal.value) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
                 )
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                { staticClass: "custom-select", attrs: { name: catAtt.id } },
-                [
-                  _c("option", { attrs: { value: "null" } }, [_vm._v("--")]),
-                  _vm._v(" "),
-                  _vm._l(catAtt.uniqueValues, function(catVal) {
-                    return _c(
-                      "option",
-                      {
-                        attrs: { disabled: catVal.disabled },
-                        domProps: { value: catVal.value }
-                      },
-                      [
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(catVal.value) +
-                            "\n          "
-                        )
-                      ]
-                    )
-                  })
-                ],
-                2
-              )
-            ])
-          ])
+              ])
+            ]
+          )
         }),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3 col-3" }, [
@@ -73059,7 +73105,28 @@ var render = function() {
             ],
             1
           )
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "vld-parent" },
+        [
+          _c("loading", {
+            attrs: {
+              active: _vm.isLoading,
+              "can-cancel": false,
+              "on-cancel": _vm.onCancel,
+              "is-full-page": _vm.fullPage
+            },
+            on: {
+              "update:active": function($event) {
+                _vm.isLoading = $event
+              }
+            }
+          })
+        ],
+        1
+      )
     ],
     1
   )
