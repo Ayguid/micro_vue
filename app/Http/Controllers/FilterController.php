@@ -31,43 +31,50 @@ class FilterController extends Controller
     ->map(function ($array) {
       return collect($array)->unique('value')->all();
     });
-    // foreach ($productAtts as $kyr => $valssr) {
-    //   foreach ($valssr as $vyr) {
-    //     $vyr->disabled=false;
-    //   }
-    // }
+
 
     // Hace el query para buscar productos que cumplan con attributes
     if ($filterAtts) {
+      $null=0;
       foreach (json_decode($filterAtts, TRUE) as $key => $value) {
         if ($value != 'null') {
           $prods = $prods->whereHas('attributes', function($q) use($key, $value){
             $q->where('attribute_id', '=', $key)->where('value', '=', $value);
           });
+        }else {
+          $null++;
         }
       }
 
-    //Arma data para menu builder SHOW
-    $productAttsShow=$prods
-    ->with('attributes')
-    ->get()
-    ->pluck('attributes')
-    ->flatten()
-    ->groupBy('attribute_id')
-    ->map(function ($array) {
-      return collect($array)->unique('value')->all();
-    });
-    foreach ($productAttsShow as $ky => $valss) {
-      foreach ($valss as $vy) {
-        $vy->disabled=true;
+      //Arma data para menu builder SHOW
+      $productAttsShow=$prods
+      ->with('attributes')
+      ->get()
+      ->pluck('attributes')
+      ->flatten()
+      ->groupBy('attribute_id')
+      ->map(function ($array) {
+        return collect($array)->unique('value')->all();
+      });
+
+      foreach ($productAtts as $key => $values) {
+        foreach ($values as $v) {
+          if (isset($productAttsShow[$key])) {
+            foreach ($productAttsShow[$key] as $vs) {
+              if ($v->value==$vs->value) {
+                $v->disabled=false;
+                $v->show=true;
+              }
+              if ($v->value!==$vs->value && !$v->show) {
+                $v->disabled=true;
+              }
+            }
+          }else {
+            $v->disabled=true;
+          }
+        }
       }
     }
-    // $productAtts2 = array_merge((array)$productAtts, (array)$productAttsShow);
-    $productAtts2 = $productAtts->replaceRecursive($productAttsShow)->all();
-    $productAtts = $productAtts2;
-    // return response($productAtts2);
-  }
-
 
 
     //Arma el menu con la data que le pasamos
@@ -91,14 +98,6 @@ class FilterController extends Controller
       'menuData'=>$menuObj
     ]);
   }
-
-
-
-
-
-
-
-
 
 
 }
