@@ -33,7 +33,7 @@ $lang=App::getLocale();
     @isset($data['category'])
       <div class="row">
         <div class="col-6">
-          <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+          {{-- <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a> --}}
           <h4 class="m-2">{{$category->father-> {'title_' . $lang} ?? $category->father->title_es}}->
             <a href="{{route('productsCat', $category->id)}}">
               {{$category-> {'title_' . $lang} ?? $category->title_es}}</a>
@@ -61,9 +61,9 @@ $lang=App::getLocale();
         <div class="tab-content" id="myTabContent">
 
           <div class="tab-pane fade show active" id="datos" role="tabpanel" aria-labelledby="datos-tab">
-            <div class="col-12 border mt-2 pt-2">
+            <div class="col-12 border border-top-0 pt-2 pb-2">
 
-              <h5>Titulo : {{$product-> {'title_' . $lang} ?? $product->title_es}}  </h5>
+              <h5>{{$product-> {'title_' . $lang} ?? $product->title_es}}  </h5>
               <h6>Codigo : {{$product->product_code}}</h6>
               @if ($admin)
                 <a href="{{route('editProduct', $product->id)}}">edit</a>
@@ -98,7 +98,9 @@ $lang=App::getLocale();
 
                   <div class="row">
                     <div class="col-12">
+                      <strong>Descripción : </strong>
                       <h6>{{$product-> {'desc_' . $lang} ?? $product->desc_es}}</h6>
+                      <hr>
                     </div>
                   </div>
 
@@ -140,7 +142,7 @@ $lang=App::getLocale();
 
 
 
-          <div class="tab-pane fade" id="downloads" role="tabpanel" aria-labelledby="downloads-tab">
+          <div class="tab-pane fade p-3" id="downloads" role="tabpanel" aria-labelledby="downloads-tab">
 
             <h4>Pdf's</h4>
             @if ($product->has_pdf)
@@ -155,7 +157,7 @@ $lang=App::getLocale();
               @endif
 
 
-              <h4>Zips's</h4>
+              <h4 class="pt-3">Zips's</h4>
               @if ($product->has_zip)
                 @guest
                   <p>Por favor login/registrate para poder descargar los archivos</p>

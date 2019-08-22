@@ -29,8 +29,9 @@ ImporterApp = function ()
 	this.floatingDialog = null;
 	this.isMobile = null;
 	this.readyForTest = null;
-	window.location.hash = parent.hashLocate;
-	// console.log(parent.hashLocate);
+	window.location.hash = parent.location.hash;
+	// window.location.hash = window.location.hash;
+	console.log(parent.location.hash);
 };
 
 ImporterApp.prototype.Init = function ()

@@ -10,18 +10,17 @@
       <div class="alert alert-danger"><i class="fa fa-times" aria-hidden="true"></i> <strong>{!! session('alert-danger') !!}</strong></div>
     @endif
 
-    {{-- <a href="javascript:history.back()" class="btn btn-primary">Back</a> --}}
-    <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-
-    {{-- {{$product}} --}}
 
     @php
-
     $productData = json_encode(
       ['product'=>$data['product'],
       'productFiles'=>$data['product']->files]
     );
     @endphp
+
+
+    <a href="{{ route('showCategory',$data['product']->category_id) }}" class="btn btn-primary">Back</a>
+
     <drop-zone :data="{{$productData}}"></drop-zone>
     @include('admin.forms.product-edit-form')
 

@@ -20,7 +20,7 @@
       ></filter-menu>
 
       <div class="row">
-        <product-component  v-for="product in products" :product='product' :key='product.id'></product-component>
+        <product-component @product-emit="showInModal(product)"  v-for="product in products" :product='product' :key='product.id'></product-component>
       </div>
 
       <div class="" v-if="totalRows > perPage">
@@ -40,6 +40,13 @@
         :is-full-page="fullPage"></loading>
       </div>
 
+
+      <b-modal id="modal-porftolio" title="Micro" size="xl"  :hide-footer="true">
+        <!-- {{currentProduct}} -->
+        <modal-product :product="currentProduct"></modal-product>
+        <!-- <iframe src="http://micro.plankwebdev.com/es" width="" height=""></iframe> -->
+      </b-modal>
+
     </div>
   </template>
 
@@ -47,7 +54,7 @@
   // Import component
   import Loading from 'vue-loading-overlay';
   // Import stylesheet
-  import 'vue-loading-overlay/dist/vue-loading.css';
+  // import 'vue-loading-overlay/dist/vue-loading.css';
 
   export default {
     props:['country', 'category'],
@@ -61,6 +68,7 @@
         menuData:'',
         isLoading: true,
         fullPage: true,
+        currentProduct:''
       }
     },
     components: {
@@ -103,6 +111,12 @@
       },
       onCancel: function() {
         console.log('User cancelled the loader.')
+      },
+      showInModal:function(product){
+        this.$bvModal.show('modal-porftolio');
+        // window.location.hash='';
+        this.currentProduct=product;
+        console.log(product);
       }
     },
 

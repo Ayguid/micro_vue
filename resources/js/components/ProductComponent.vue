@@ -4,21 +4,24 @@
 
     <transition name="fade"appear >
 
-      <div class="card">
+      <div class="card mb-4" @click="emitProduct">
          <h6 v-if="product.category" class="p-2"><span>Categoria: </span> <a :href="$root.baseUrl+'/cat/'+product.category.id">{{product.category.title_es}}</a> </h6>
+          <!-- <a :href="$root.baseUrl+'/showProduct/'+product.id"> -->
         <div class="card-header">{{(product['title_'+$root.local])?product['title_'+$root.local]:product['title_es']}}</div>
-        <div class="card-body">
-          <a :href="$root.baseUrl+'/showProduct/'+product.id">
-          <h6>Title:  {{(product['title_'+$root.local])?product['title_'+$root.local]:product['title_es']}}</h6>
-          <h6>Code:   {{product.product_code}}</h6>
-          <h6>Desc:   {{(product['desc_'+$root.local])?product['desc_'+$root.local]:product['desc_es']}}</h6>
-        </a>
+      <!-- </a> -->
+        <div class="card-body p-0">
+          <!-- <a :href="$root.baseUrl+'/showProduct/'+product.id"> -->
+          <!-- <h6>{{(product['title_'+$root.local])?product['title_'+$root.local]:product['title_es']}}</h6> -->
+          <!-- <h6>Desc:   {{(product['desc_'+$root.local])?product['desc_'+$root.local]:product['desc_es']}}</h6> -->
         <div v-if="product.has_image" class="">
           <img v-for="file in product.files" width="100%" v-if="checkFileType(file.file_path)=='img'" :src="$root.baseUrl+'/storage/product_images/'+file.file_path" alt="">
         </div>
         <div v-else class="">
           <img  width="100%" :src="$root.baseUrl+'/images/default.jpeg'" alt="">
         </div>
+      <!-- </a> -->
+      <div class="p-2">
+      <h6 >Code:   {{product.product_code}}</h6>
 
         <div class="">
           <img v-if="product.has_pdf"    width="15%" :src="$root.baseUrl+'/icons/pdf_logo.svg'" alt="">
@@ -32,6 +35,7 @@
             <h6>{{att.value}}</h6>
           </div>
         </div>
+      </div>
       </div>
 
       </div>
@@ -55,6 +59,9 @@ export default {
         return 'img';
       }
     },
+    emitProduct:function(){
+      this.$emit('product-emit');
+    }
   },
 
   mounted() {

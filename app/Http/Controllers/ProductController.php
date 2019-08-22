@@ -54,6 +54,7 @@ class ProductController extends Controller
       $validator = Validator::make($request->all(), [
         'title_es' => 'required|string|max:255',
         'desc_es' => 'required|string|max:255',
+        'product_code' => 'required|string|max:255',
       ]);
       if ($validator->fails())
       {
@@ -116,6 +117,7 @@ class ProductController extends Controller
   */
   public function edit($id)
   {
+
     $product = Product::find($id);
     $cat = Category::find($product->category_id);
     $parents = collect([]);
@@ -142,73 +144,87 @@ class ProductController extends Controller
   public function update(Request $request)
   {
     //
-    return DB::transaction(function () use ($request) {
+    $save=true;
+    $validator = Validator::make($request->all(), [
+      'title_es' => 'required|string|max:255',
+      'desc_es' => 'required|string|max:255',
+      'product_code' => 'required|string|max:255',
+    ]);
+    if ($validator->fails())
+    {
       $save = false;
-      $prod = Product::find($request->product_id);
-      $save = $prod->update($request->all());
-      //delete
-      foreach ($prod->possibleCountries() as $country) {
-        $t = false;
-        $y = false;
-        if ($prod->isInCountry($country->id)) {
-          if ($request->country_id) {
-            foreach ($request->country_id as $key => $value) {
-              ($value == $country->id)? $t=true : false;
-            }
-          }
-          if (!$t) {
-            $p = Product_In_Country::all()->where('country_id', '=', $country->id)->where('product_id', '=', $prod->id)->first();
-            $save=$p->delete();
-          }
-        }
-        //save
-        if (!$prod->isInCountry($country->id)) {
-          if ($request->country_id) {
-            foreach ($request->country_id as $key => $value) {
-              ($value == $country->id)? $y=true : false;
-            }
-            if ($y) {
-              $prodInCt = new Product_In_Country();
-              $prodInCt->country_id=$country->id;
-              $prodInCt->product_id=$prod->id;
-              $save = $prodInCt->save();
-            }
-          }
-        }
-      }
+      return redirect()->back()->withInput($request->all())->withErrors($validator);
+    }else if (!$validator->fails()) {
 
-      if ($request['attributes'] ) {
-      foreach ($request['attributes'] as $keyAtt => $valueAtt) {
-        if ($valueAtt) {
-          if ($pa = $prod->attributeValue($keyAtt)) {
-            $pa->value = $valueAtt;
-            $save = $pa->save();
+          return DB::transaction(function () use ($request) {
+            $save = false;
+            $prod = Product::find($request->product_id);
+            $save = $prod->update($request->all());
+            //delete
+            foreach ($prod->possibleCountries() as $country) {
+              $t = false;
+              $y = false;
+              if ($prod->isInCountry($country->id)) {
+                if ($request->country_id) {
+                  foreach ($request->country_id as $key => $value) {
+                    ($value == $country->id)? $t=true : false;
+                  }
+                }
+                if (!$t) {
+                  $p = Product_In_Country::all()->where('country_id', '=', $country->id)->where('product_id', '=', $prod->id)->first();
+                  $save=$p->delete();
+                }
+              }
+              //save
+              if (!$prod->isInCountry($country->id)) {
+                if ($request->country_id) {
+                  foreach ($request->country_id as $key => $value) {
+                    ($value == $country->id)? $y=true : false;
+                  }
+                  if ($y) {
+                    $prodInCt = new Product_In_Country();
+                    $prodInCt->country_id=$country->id;
+                    $prodInCt->product_id=$prod->id;
+                    $save = $prodInCt->save();
+                  }
+                }
+              }
+            }
+
+            if ($request['attributes'] ) {
+            foreach ($request['attributes'] as $keyAtt => $valueAtt) {
+              if ($valueAtt) {
+                if ($pa = $prod->attributeValue($keyAtt)) {
+                  $pa->value = $valueAtt;
+                  $save = $pa->save();
+                }
+                else {
+                  $prodAttr= new Product_Attribute;
+                  $prodAttr->attribute_id=$keyAtt;
+                  $prodAttr->product_id=$prod->id;
+                  $prodAttr->value=$valueAtt;
+                  $save = $prodAttr->save();
+                }
+              }
+              if (!$valueAtt && ($pd =  $prod->attributeValue($keyAtt))) {
+                $save = $pd->delete();
+              }
+            }
           }
-          else {
-            $prodAttr= new Product_Attribute;
-            $prodAttr->attribute_id=$keyAtt;
-            $prodAttr->product_id=$prod->id;
-            $prodAttr->value=$valueAtt;
-            $save = $prodAttr->save();
-          }
-        }
-        if (!$valueAtt && ($pd =  $prod->attributeValue($keyAtt))) {
-          $save = $pd->delete();
-        }
-      }
+
+            if ($save)
+            {
+              $request->session()->flash('alert-success', 'Editaste con exito!');
+              return redirect()->back();
+            }
+            else
+            {
+              $request->session()->flash('alert-danger', 'Oops there was a problem!');
+              return redirect()->back();
+            }
+          });
     }
 
-      if ($save)
-      {
-        $request->session()->flash('alert-success', 'Editaste con exito!');
-        return redirect()->back();
-      }
-      else
-      {
-        $request->session()->flash('alert-danger', 'Oops there was a problem!');
-        return redirect()->back();
-      }
-    });
   }
 
   /**
@@ -245,15 +261,15 @@ class ProductController extends Controller
 
 
 
-  public function find(Request $request)
+  public function find($query)
   {
-    $products = Product::where('product_code', 'LIKE', '%'.$request->string.'%')
-    ->orWhere('title_es', 'LIKE', '%'.$request->string.'%')
-    ->orWhere('desc_es', 'LIKE', '%'.$request->string.'%')
-    ->orWhere('title_en', 'LIKE', '%'.$request->string.'%')
-    ->orWhere('desc_en', 'LIKE', '%'.$request->string.'%')
-    ->orWhere('title_pt', 'LIKE', '%'.$request->string.'%')
-    ->orWhere('desc_pt', 'LIKE', '%'.$request->string.'%')
+    $products = Product::where('product_code', 'LIKE', '%'.$query.'%')
+    ->orWhere('title_es', 'LIKE', '%'.$query.'%')
+    ->orWhere('desc_es', 'LIKE', '%'.$query.'%')
+    ->orWhere('title_en', 'LIKE', '%'.$query.'%')
+    ->orWhere('desc_en', 'LIKE', '%'.$query.'%')
+    ->orWhere('title_pt', 'LIKE', '%'.$query.'%')
+    ->orWhere('desc_pt', 'LIKE', '%'.$query.'%')
     ->with('files', 'category.getTopCategories', 'attributes.attribute')
     ->paginate(5);
     $data=[
@@ -261,9 +277,8 @@ class ProductController extends Controller
     ];
     if ($products->total()==0) {
       return response('Not found', 200);
-    }else {
-      return view('admin.products-view')->with('data', $data);
     }
+    return view('admin.products-view')->with('data', $data);
   }
 
 

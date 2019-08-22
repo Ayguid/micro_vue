@@ -64,11 +64,11 @@ function(){
     Route::delete('/deleteAttribute{att}', 'AttributeController@destroy')->name('deleteAttribute');
 
     //products sections
-    Route::get('/productsInCategory/{id?}', 'ProductController@productsInCategory')->name('productsInCat');
+    // Route::get('/productsInCategory/{id?}', 'ProductController@productsInCategory')->name('productsInCat');
     Route::post('/addProduct', 'ProductController@store')->name('addProduct');
     Route::get('/editProduct/{id}', 'ProductController@edit')->name('editProduct');
     Route::post('/updateProduct', 'ProductController@update')->name('updateProduct');
-    Route::get('/findProducts','ProductController@find')->name('adminFindProduct');
+    Route::get('/findProducts/{query?}','ProductController@find')->name('adminFindProduct');
     Route::delete('/deleteProduct/{id}','ProductController@destroy')->name('destroyProduct');
 
     //media

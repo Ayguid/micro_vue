@@ -14,7 +14,7 @@
 
 
 
-
+      <a class="btn btn-primary" href="{{route('adminProfiles')}}">Back</a>
 
 
     @include('admin.forms.admins-edit-form')

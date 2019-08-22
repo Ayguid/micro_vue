@@ -19,7 +19,6 @@ class FilterController extends Controller
 
     //Arma data para menu builder ORIGINAL
     $productAtts=$this->plucker($prods);
-
     // Hace el query para buscar productos que cumplan con attributes
     if ($filterAtts) {
       foreach (json_decode($filterAtts, TRUE) as $key => $value) {
@@ -29,7 +28,6 @@ class FilterController extends Controller
           });
         }
       }
-
       //Arma data para menu builder SHOW
       $productAttsShow=$this->plucker($prods);
 
@@ -65,7 +63,7 @@ class FilterController extends Controller
         $menuObj->attributes[$key]->uniqueValues=$col;
       }
     }
-    
+
     //response con todo lo necesario
     return response()->json([
       'products'=>$prods->with('files', 'attributes.attribute')->paginate(16),

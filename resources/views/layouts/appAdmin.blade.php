@@ -55,10 +55,11 @@
             {{-- <li> <a class="btn btn-secondary" href="{{route('country_landing')}}">{{ Lang::get('messages.change_country')}}</a> </li> --}}
           </ul>
 
-          <form id="searchForm" action="{{route('adminFindProduct')}}" method="get" class="form-inline my-2 my-lg-0">
+          {{-- <form id="searchForm" action="{{route('adminFindProduct')}}" method="get" class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="search" aria-label="search" name="string">
             <button class="btn btn-outline-success my-2 my-sm-0" name="search" type="submit">Search</button>
-          </form>
+          </form> --}}
+          <search-component class="d-none d-md-block" :consulturl='{{json_encode(route('adminFindProduct'))}}'></search-component>
 
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ml-auto">

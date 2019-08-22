@@ -20,7 +20,7 @@
       </div>
     @endif
   </div>
-
+        <a class="" href="{{route('showCategory', $data['attribute']->category_id)}}">Back</a>
     @include('admin.forms.attribute-edit-form')
 
 
