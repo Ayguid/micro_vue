@@ -29,7 +29,7 @@ Vue.component('products-portfolio', require('./components/views/ProductsPortfoli
 Vue.component('filter-menu', require('./components/FilterMenu.vue').default);
 Vue.component('search-component', require('./components/forms/SearchComponent.vue').default);
 Vue.component('product-component', require('./components/ProductComponent.vue').default);
-Vue.component('modal-product', require('./components/modalProduct.vue').default);
+// Vue.component('modal-product', require('./components/modalProduct.vue').default);
 //polemicos
 Vue.component('delete-alert', require('./components/DeleteAlert.vue').default);
 // Vue.component('filter-helper', require('./components/FilterHelper.vue').default);
@@ -54,8 +54,8 @@ Vue.use(VueSweetalert2, options);
 
 import BootstrapVue from 'bootstrap-vue';
 Vue.use(BootstrapVue);
-// import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 
 const app = new Vue({
     el: '#app',

@@ -20,7 +20,8 @@
       ></filter-menu>
 
       <div class="row">
-        <product-component @product-emit="showInModal(product)"  v-for="product in products" :product='product' :key='product.id'></product-component>
+        <!-- <product-component @product-emit="showInModal(product)"  v-for="product in products" :product='product' :key='product.id'></product-component> -->
+        <product-component   v-for="product in products" :product='product' :key='product.id'></product-component>
       </div>
 
       <div class="" v-if="totalRows > perPage">
@@ -40,12 +41,10 @@
         :is-full-page="fullPage"></loading>
       </div>
 
-
+<!--
       <b-modal id="modal-porftolio" title="Micro" size="xl"  :hide-footer="true">
-        <!-- {{currentProduct}} -->
         <modal-product :product="currentProduct"></modal-product>
-        <!-- <iframe src="http://micro.plankwebdev.com/es" width="" height=""></iframe> -->
-      </b-modal>
+      </b-modal> -->
 
     </div>
   </template>
@@ -112,12 +111,12 @@
       onCancel: function() {
         console.log('User cancelled the loader.')
       },
-      showInModal:function(product){
-        this.$bvModal.show('modal-porftolio');
-        // window.location.hash='';
-        this.currentProduct=product;
-        console.log(product);
-      }
+      // showInModal:function(product){
+      //   this.$bvModal.show('modal-porftolio');
+      //   // window.location.hash='';
+      //   this.currentProduct=product;
+      //   console.log(product);
+      // }
     },
 
     mounted() {

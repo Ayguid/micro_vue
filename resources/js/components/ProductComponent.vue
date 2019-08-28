@@ -6,9 +6,9 @@
 
       <div class="card mb-4" @click="emitProduct">
          <h6 v-if="product.category" class="p-2"><span>Categoria: </span> <a :href="$root.baseUrl+'/cat/'+product.category.id">{{product.category.title_es}}</a> </h6>
-          <!-- <a :href="$root.baseUrl+'/showProduct/'+product.id"> -->
+         <a :href="$root.baseUrl+'/showProduct/'+product.id"> 
         <div class="card-header">{{(product['title_'+$root.local])?product['title_'+$root.local]:product['title_es']}}</div>
-      <!-- </a> -->
+      </a>
         <div class="card-body p-0">
           <!-- <a :href="$root.baseUrl+'/showProduct/'+product.id"> -->
           <!-- <h6>{{(product['title_'+$root.local])?product['title_'+$root.local]:product['title_es']}}</h6> -->
