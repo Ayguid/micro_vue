@@ -60,6 +60,7 @@ class FilterController extends Controller
         foreach ($values as $v) {
           $col->add($v);
         }
+        // $col->orderBy('value');
         $menuObj->attributes[$key]->uniqueValues=$col;
       }
     }
@@ -84,7 +85,7 @@ class FilterController extends Controller
     ->flatten()
     ->groupBy('attribute_id')
     ->map(function ($array) {
-      return collect($array)->unique('value')->all();
+      return collect($array)->unique('value')->sortBy('value')->all();
     });
   }
 

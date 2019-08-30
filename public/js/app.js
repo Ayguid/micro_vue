@@ -73908,35 +73908,45 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "card-body p-0" }, [
-              _vm.product.has_image
-                ? _c(
-                    "div",
-                    {},
-                    _vm._l(_vm.product.files, function(file) {
-                      return _vm.checkFileType(file.file_path) == "img"
-                        ? _c("img", {
-                            attrs: {
-                              width: "100%",
-                              src:
-                                _vm.$root.baseUrl +
-                                "/storage/product_images/" +
-                                file.file_path,
-                              alt: ""
-                            }
-                          })
-                        : _vm._e()
-                    }),
-                    0
-                  )
-                : _c("div", {}, [
-                    _c("img", {
-                      attrs: {
-                        width: "100%",
-                        src: _vm.$root.baseUrl + "/images/default.jpeg",
-                        alt: ""
-                      }
-                    })
-                  ]),
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href: _vm.$root.baseUrl + "/showProduct/" + _vm.product.id
+                  }
+                },
+                [
+                  _vm.product.has_image
+                    ? _c(
+                        "div",
+                        {},
+                        _vm._l(_vm.product.files, function(file) {
+                          return _vm.checkFileType(file.file_path) == "img"
+                            ? _c("img", {
+                                attrs: {
+                                  width: "100%",
+                                  src:
+                                    _vm.$root.baseUrl +
+                                    "/storage/product_images/" +
+                                    file.file_path,
+                                  alt: ""
+                                }
+                              })
+                            : _vm._e()
+                        }),
+                        0
+                      )
+                    : _c("div", {}, [
+                        _c("img", {
+                          attrs: {
+                            width: "100%",
+                            src: _vm.$root.baseUrl + "/images/default.jpeg",
+                            alt: ""
+                          }
+                        })
+                      ])
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "p-2" }, [
                 _c("h6", [

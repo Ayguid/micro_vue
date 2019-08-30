@@ -6,11 +6,11 @@
 
       <div class="card mb-4" @click="emitProduct">
          <h6 v-if="product.category" class="p-2"><span>Categoria: </span> <a :href="$root.baseUrl+'/cat/'+product.category.id">{{product.category.title_es}}</a> </h6>
-         <a :href="$root.baseUrl+'/showProduct/'+product.id"> 
+         <a :href="$root.baseUrl+'/showProduct/'+product.id">
         <div class="card-header">{{(product['title_'+$root.local])?product['title_'+$root.local]:product['title_es']}}</div>
       </a>
         <div class="card-body p-0">
-          <!-- <a :href="$root.baseUrl+'/showProduct/'+product.id"> -->
+       <a :href="$root.baseUrl+'/showProduct/'+product.id">
           <!-- <h6>{{(product['title_'+$root.local])?product['title_'+$root.local]:product['title_es']}}</h6> -->
           <!-- <h6>Desc:   {{(product['desc_'+$root.local])?product['desc_'+$root.local]:product['desc_es']}}</h6> -->
         <div v-if="product.has_image" class="">
@@ -19,7 +19,7 @@
         <div v-else class="">
           <img  width="100%" :src="$root.baseUrl+'/images/default.jpeg'" alt="">
         </div>
-      <!-- </a> -->
+      </a> 
       <div class="p-2">
       <h6 >Code:   {{product.product_code}}</h6>
 

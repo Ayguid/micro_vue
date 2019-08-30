@@ -35,7 +35,12 @@ class AdminLoginController extends Controller
     //   'password' => 'required|min:8'
     // ]);
     //Attempt to log the user in
-    if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+    $admin=Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember);
+    if ($admin) {
+      //polemico pensar una mejor manera
+      if (Auth::guard('admin')->user()->country_id !='1' && Auth::guard('admin')->user()->job_title != 'Ingenieria') {
+        Auth::guard('admin')->logout();
+      }
       //if succesfull, then redirect to their intended location
       return redirect()->intended(route('admin.dashboard'));
     }

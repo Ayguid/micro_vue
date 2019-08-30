@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -17,6 +18,7 @@ class AdminController extends Controller
   public function __construct()
   {
     $this->middleware('auth:admin');
+
   }
 
   /**
@@ -26,6 +28,9 @@ class AdminController extends Controller
   */
   public function index()
   {
+    // if (Auth::guard('admin')->user()->country_id !='1' && Auth::guard('admin')->user()->job_title != 'Ingenieria') {
+    //   return;
+    // }
     return view('admin');
   }
 

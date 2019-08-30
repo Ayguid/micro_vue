@@ -58,6 +58,8 @@
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div> --}}
+                            @if ($data['adminProfile']->email !='ingenieria@micro.com')
+
                             <div class="form-group row">
                                 <label for="job_title" class="col-md-4 col-form-label text-md-right">{{ __('Job Title') }}</label>
 
@@ -84,6 +86,7 @@
                                 </select>
                                 </div>
                             </div>
+                          @endif
 
 
 

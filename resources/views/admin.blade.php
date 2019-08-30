@@ -22,7 +22,7 @@
 
           <div class="card-body">
 
-
+{{-- {{dd(Auth::guard('admin')->user()->job_title)}} --}}
             You are logged in as <strong>ADMIN!</strong>
 
 
