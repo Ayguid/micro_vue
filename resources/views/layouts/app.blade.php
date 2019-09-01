@@ -24,7 +24,6 @@
   <script src="https://kit.fontawesome.com/6a953b9625.js"></script>
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/micro.css') }}" rel="stylesheet">
 </head>
 <body>
   <div id="app">
@@ -32,7 +31,8 @@
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
       <div class="container">
         <a class="navbar-brand" href="{{ route('landing')}}">
-          {{ config('app.name', 'Laravel') }}
+          {{-- {{ config('app.name', 'Laravel') }} --}}
+          <img width="130"  class="d-inline-block align-center" src="{{asset('images/logos/logo micro sin placa.jpg')}}" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
           <span class="navbar-toggler-icon"></span>

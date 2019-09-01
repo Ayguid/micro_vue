@@ -16,7 +16,7 @@
 
   <style>
   html, body {
-    background-color: #fff;
+    background-color: #fcfeff !important;
     color: #636b6f;
     font-family: 'Nunito', sans-serif;
     font-weight: 200;
@@ -68,7 +68,7 @@
   </style>
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="">
   <div class="flex-center position-ref full-height">
     @if (Route::has('login'))
       <div class="top-right links">
@@ -101,8 +101,9 @@
     @endif
 
     <div class="content">
-      <div class="title m-b-md">
-        Micro sa
+      <div class="title m-b-md ">
+        {{-- Micro sa --}}
+        <img class="col-4" src="{{asset('images/logos/logo micro sin placa.jpg')}}" alt="">
       </div>
       {{-- {{}} --}}
       <div class="links">

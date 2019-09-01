@@ -4,7 +4,7 @@
 
     {{-- <h3>{{session('country.country_desc')}}</h3> --}}
     @if (!isset($data['category']))
-          <h6 class="p-2">{{Lang::get('messages.welcome')}}</h6>
+          {{-- <h6 class="p-2">{{Lang::get('messages.welcome')}}</h6> --}}
     @endif
 
     @php
