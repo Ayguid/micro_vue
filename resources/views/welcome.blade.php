@@ -68,7 +68,7 @@
   </style>
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="">
+<body class="container">
   <div class="flex-center position-ref full-height">
     @if (Route::has('login'))
       <div class="top-right links">
@@ -103,14 +103,19 @@
     <div class="content">
       <div class="title m-b-md ">
         {{-- Micro sa --}}
-        <img class="col-4" src="{{asset('images/logos/logo micro sin placa.jpg')}}" alt="">
+        <img class="col-9 col-md-7 col-lg-5" src="{{asset('images/logos/logo micro sin placa.jpg')}}" alt="">
       </div>
       {{-- {{}} --}}
-      <div class="links">
+
+          <div class="row">
         @foreach (App\Models440\Country::all() as $country)
-          <a href="{{route('country_landing', $country->id)}}">{{$country->country_desc}}</a>
+          <div class="links pb-4 col-12 col-md-6 col-lg-4">
+            <a class="" href="{{route('country_landing', $country->id)}}">{{$country->country_desc}}</a>
+          </div>
         @endforeach
+
       </div>
+
 
     </div>
   </div>

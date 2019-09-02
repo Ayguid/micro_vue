@@ -15,7 +15,7 @@
     @endphp
 
     @isset($data['categories'])
-      <div class="d-flex flex-wrap justify-content-start">
+      <div class="">
         @include('components.category-menu')
       </div>
     @endisset

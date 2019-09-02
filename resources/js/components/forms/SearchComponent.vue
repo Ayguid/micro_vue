@@ -19,6 +19,7 @@
       },
       methods:{
         validateSearch:function(event){
+          const obj=this;
           event.preventDefault();
           var form = this.$el.children[0];
           var qy = form.elements.query.value;
@@ -27,7 +28,21 @@
             axios.get(this.consulturl+'/'+ qy)
             .then(function (response) {
               if (response.data=='Not found') {
-                form.elements.query.value="not found";
+                let originalBorder = form.elements.query.style.border;
+                form.elements.query.style.border="1px solid rgb(251, 64, 64)";
+                switch (obj.$root.local) {
+                  case 'en':
+                  form.elements.query.value="Not Found";
+                    break;
+                  case 'pt':
+                  form.elements.query.value="Nao encontrado";
+                    break;
+                  default:
+                  form.elements.query.value="No encontrado";
+                }
+                setTimeout(function(){
+                form.elements.query.style.border=originalBorder
+                form.elements.query.value=qy;}, 1000);
               }
               else {
                 form.submit();
@@ -46,6 +61,7 @@
 
       },
       mounted() {
+        // console.log(this.$root.local);
       }
     }
 </script>

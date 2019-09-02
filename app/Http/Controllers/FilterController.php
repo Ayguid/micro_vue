@@ -24,7 +24,7 @@ class FilterController extends Controller
       foreach (json_decode($filterAtts, TRUE) as $key => $value) {
         if ($value != 'null') {
           $prods = $prods->whereHas('attributes', function($q) use($key, $value){
-            $q->where('attribute_id', '=', $key)->where('value', '=', $value);
+            $q->where('attribute_id', '=', $key)->where('value_es', '=', $value);
           });
         }
       }
@@ -35,11 +35,11 @@ class FilterController extends Controller
         foreach ($values as $v) {
           if (isset($productAttsShow[$key])) {
             foreach ($productAttsShow[$key] as $vs) {
-              if ($v->value==$vs->value) {
+              if ($v->value_es==$vs->value_es) {
                 $v->disabled=false;
                 $v->show=true;
               }
-              if ($v->value!==$vs->value && !$v->show) {
+              if ($v->value_es!==$vs->value_es && !$v->show) {
                 $v->disabled=true;
               }
             }
@@ -85,7 +85,7 @@ class FilterController extends Controller
     ->flatten()
     ->groupBy('attribute_id')
     ->map(function ($array) {
-      return collect($array)->unique('value')->sortBy('value')->all();
+      return collect($array)->unique('value_es')->sortBy('value_es')->all();
     });
   }
 

@@ -130,6 +130,7 @@ $lang=App::getLocale();
                 <div id="tapadorBottom"></div>
                 {{-- <iframe onload=""  id="cadView" src="//sharecad.org/cadframe/load?url=https://ayguid.github.io/tryDWG/{{$files['dxfs'][0]->file_path}}" width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe> --}}
                 <iframe onload=""  id="cadView" src="//sharecad.org/cadframe/load?url=micro.plankwebdev.com/storage/dxfs/{{$files['dxfs'][0]->file_path}}" width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe>
+                {{-- <iframe src="http://docs.google.com/viewer?url=micro.plankwebdev.com/storage/dxfs/{{$files['dxfs'][0]->file_path}}&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe> --}}
                 {{-- {{$files['dxfs'][0]->file_path}} --}}
               </div>
             @else

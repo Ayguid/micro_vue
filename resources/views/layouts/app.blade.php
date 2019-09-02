@@ -32,7 +32,17 @@
       <div class="container">
         <a class="navbar-brand" href="{{ route('landing')}}">
           {{-- {{ config('app.name', 'Laravel') }} --}}
-          <img width="130"  class="d-inline-block align-center" src="{{asset('images/logos/logo micro sin placa.jpg')}}" alt="">
+          @switch(config('app.locale'))
+            @case('pt')
+                <img width="130"  class="d-inline-block align-center" src="{{asset('images/logos/logo-micro-pt.jpg')}}" alt="">
+                @break
+            @case('en')
+                <img width="130"  class="d-inline-block align-center" src="{{asset('images/logos/logo-micro-en.jpg')}}" alt="">
+                @break
+            @default
+                <img width="130"  class="d-inline-block align-center" src="{{asset('images/logos/logo-micro-es.jpg')}}" alt="">
+        @endswitch
+
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
           <span class="navbar-toggler-icon"></span>
@@ -74,8 +84,10 @@
           </ul>
 
           <!-- Right Side Of Navbar -->
+  
 
-          <search-component class="d-none d-md-block" :consulturl='{{json_encode(route('userFindProduct'))}}'></search-component>  {{--visible en vista con nav completo--}}
+          <search-component class="d-none d-md-block " :consulturl='{{json_encode(route('userFindProduct'))}}'></search-component>  {{--visible en vista con nav completo--}}
+
 
           <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
