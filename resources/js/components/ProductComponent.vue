@@ -19,7 +19,7 @@
         <div v-else class="">
           <img  width="100%" :src="$root.baseUrl+'/images/default.jpeg'" alt="">
         </div>
-      </a> 
+      </a>
       <div class="p-2">
       <h6 >Code:   {{product.product_code}}</h6>
 
@@ -33,6 +33,7 @@
           <div v-for="att in product.attributes" v-if="att.attribute.filterable"  class="">
             <h6>  <strong> {{att.attribute.name_es}} </strong>  </h6>
             <h6>{{att.value}}</h6>
+            <!-- <h6>{{(att['value_'+$root.local])?att['value_'+$root.local]:att['value_es']}}</h6> -->
           </div>
         </div>
       </div>

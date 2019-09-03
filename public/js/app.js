@@ -2131,6 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['product'],
   data: function data() {
@@ -73830,17 +73831,13 @@ var render = function() {
                         "option",
                         {
                           attrs: { disabled: catVal.disabled },
-                          domProps: { value: catVal["value_es"] }
+                          domProps: { value: catVal.value }
                         },
                         [
                           _vm._v(
                             "\n            " +
-                              _vm._s(
-                                catVal["value_" + _vm.$root.local]
-                                  ? catVal["value_" + _vm.$root.local]
-                                  : catVal["value_es"]
-                              ) +
-                              "\n          "
+                              _vm._s(catVal.value) +
+                              "\n            "
                           )
                         ]
                       )

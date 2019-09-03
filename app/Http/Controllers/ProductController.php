@@ -48,7 +48,7 @@ class ProductController extends Controller
   */
   public function store(Request $request)
   {
-
+    // dd($request);
     return DB::transaction(function () use ($request) {
       $save = false;
       $validator = Validator::make($request->all(), [

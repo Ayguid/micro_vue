@@ -17,9 +17,7 @@ class CreateProductsAttributesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->bigInteger('attribute_id')->unsigned()->nullable();
-            $table->string('value_es');
-            $table->string('value_en');
-            $table->string('value_pt');
+            $table->string('value');
             $table->string('sequence')->nullable();
             $table->timestamps();
         });

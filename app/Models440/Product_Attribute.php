@@ -14,7 +14,7 @@ class Product_Attribute extends Model
     protected $table='products_attributes';
 
     protected $fillable = [
-    'product_id', 'attribute_id', 'value_es', 'value_en', 'value_pt', 'sequence'
+    'product_id', 'attribute_id', 'value', 'sequence'
     ];
 
 
