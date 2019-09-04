@@ -11,6 +11,7 @@
 <meta name="description" content="Neumática / Electrónica / Automatización industrial">
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <title>{{ config('app.name') }}</title>
 
@@ -84,7 +85,7 @@
           </ul>
 
           <!-- Right Side Of Navbar -->
-  
+
 
           <search-component class="d-none d-md-block " :consulturl='{{json_encode(route('userFindProduct'))}}'></search-component>  {{--visible en vista con nav completo--}}
 

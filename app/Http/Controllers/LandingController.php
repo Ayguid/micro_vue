@@ -55,7 +55,9 @@ class LandingController extends Controller
 
   public function showProduct($id)
   {
-    $this->data['product']= Product::find($id);
+    // $this->data['product']= Product::find($id)
+    $this->data['product']= Product::with('attributes.attribute')->find($id);//vue
+    // dd($this->data['product']);
     $this->data['products']= '';
     $this->data['category']=Category::find($this->data['product']->category_id);
     return view('product-view')->with('data', $this->data);

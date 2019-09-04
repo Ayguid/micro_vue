@@ -26,6 +26,7 @@ Vue.component('contact-mail-form', require('./components/ContactMailForm.vue').d
 
 
 Vue.component('products-portfolio', require('./components/views/ProductsPortfolio.vue').default);
+Vue.component('product-view', require('./components/views/ProductView.vue').default);
 Vue.component('filter-menu', require('./components/FilterMenu.vue').default);
 Vue.component('search-component', require('./components/forms/SearchComponent.vue').default);
 Vue.component('product-component', require('./components/ProductComponent.vue').default);
@@ -39,10 +40,42 @@ Vue.component('delete-alert', require('./components/DeleteAlert.vue').default);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
  // main.js
 import Vue from 'vue';
 
+
+//
+import fileTypeReader from './myFuncs/fileManager';
+Vue.mixin(fileTypeReader);
+//
+
+
+//
+var translations;
+// import translations from './lang/translations_en.json';
+// import translations from './lang/translations_pt.json';
+// import { translations } from './lang/translations.js';
+// import translations from './lang/messages.json';
+const lang = (document.documentElement.lang=='pt-BR')?'pt':document.documentElement.lang;
+import VueInternationalization from 'vue-i18n';
+switch (lang) {
+  case 'en':
+  translations = require('./lang/translations_en.json')
+    break;
+  case 'pt':
+  translations = require('./lang/translations_pt.json')
+    break;
+  default:
+}
+Vue.use(VueInternationalization);
+const i18n = new VueInternationalization({
+    locale: lang,
+    messages: translations,
+    objectNotation: true,
+    keySeparator:true
+});
+// console.log(translations[`${lang}`+'.values']);
+//
 
 
 import VueSweetalert2 from 'vue-sweetalert2';
@@ -59,13 +92,14 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 const app = new Vue({
     el: '#app',
+    i18n,
     data(){
       return  {
-        local:(document.documentElement.lang=='pt-BR')?'pt':document.documentElement.lang,
+        local:lang,
         baseUrl:window.axios.defaults.baseURL
       }
     },
     mounted(){
-      // console.log(this.local);
+
     }
 });

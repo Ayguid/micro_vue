@@ -5,6 +5,7 @@
 
 <template>
   <div class="">
+    <!-- <h1>{{ $t('Resultado') }}</h1> -->
 
     <p class="mt-2 mb-2">
       {{(category.get_top_categories['title_'+$root.local])?category.get_top_categories['title_'+$root.local]:category.get_top_categories['title_es']}} -->
@@ -118,7 +119,9 @@
       //   console.log(product);
       // }
     },
-
+    created() {
+  // console.log('Component has been created!');
+},
     mounted() {
       this.fetchProducts();
     }

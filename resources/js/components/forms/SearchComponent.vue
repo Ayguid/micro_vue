@@ -30,16 +30,7 @@
               if (response.data=='Not found') {
                 let originalBorder = form.elements.query.style.border;
                 form.elements.query.style.border="1px solid rgb(251, 64, 64)";
-                switch (obj.$root.local) {
-                  case 'en':
-                  form.elements.query.value="Not Found";
-                    break;
-                  case 'pt':
-                  form.elements.query.value="Nao encontrado";
-                    break;
-                  default:
-                  form.elements.query.value="No encontrado";
-                }
+                form.elements.query.value=obj.$t("No encontrado");
                 setTimeout(function(){
                 form.elements.query.style.border=originalBorder
                 form.elements.query.value=qy;}, 1000);
