@@ -66,42 +66,6 @@ class Product extends Model
   }
 
 
-  public function getFiles()
-  {
-      $files = [
-        'images'=>[],
-        'pdfs'=>[],
-        'stls'=>[],
-        'dxfs'=>[],
-        'zips'=>[],
-      ];
-
-      foreach ($this->files as $file) {
-        switch ($file->extension()) {
-          case 'jpg':
-          case 'png':
-            array_push($files['images'], $file);
-            break;
-          case 'pdf':
-            array_push($files['pdfs'], $file);
-            break;
-          case 'stl':
-            array_push($files['stls'], $file);
-            break;
-          case 'dxf':
-            array_push($files['dxfs'], $file);
-            break;
-          case 'zip':
-            array_push($files['zips'], $file);
-            break;
-          default:
-            // code...
-            break;
-        }
-      }
-      return $files;
-  }
-
 
 
 

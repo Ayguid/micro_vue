@@ -11,8 +11,18 @@
   <title>{{ config('app.name') }}</title>
 
   <!-- Scripts -->
+  <script>
+  window.Laravel = {!! json_encode([
+    'csrfToken' => csrf_token(),
+    'apiToken' => $currentUser->api_token ?? null,
+    // 'user' => Auth::user(),
+    // 'user' =>  Auth::user() ? App\User::findOrFail(Auth::user()->id)->userMainData() : Auth::user(),
+    // 'user' =>  Auth::user() ? Auth::user()->userMainData() : Auth::user(),
+    'user' =>  Auth::user(),
+    'admin' => Auth::guard('admin')->check(),
+    ]) !!};
+    </script>
   <script src="{{ asset('js/app.js') }}" defer></script>
-
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">

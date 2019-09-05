@@ -30,7 +30,6 @@ Vue.component('product-view', require('./components/views/ProductView.vue').defa
 Vue.component('filter-menu', require('./components/FilterMenu.vue').default);
 Vue.component('search-component', require('./components/forms/SearchComponent.vue').default);
 Vue.component('product-component', require('./components/ProductComponent.vue').default);
-// Vue.component('modal-product', require('./components/modalProduct.vue').default);
 //polemicos
 Vue.component('delete-alert', require('./components/DeleteAlert.vue').default);
 // Vue.component('filter-helper', require('./components/FilterHelper.vue').default);
@@ -96,7 +95,9 @@ const app = new Vue({
     data(){
       return  {
         local:lang,
-        baseUrl:window.axios.defaults.baseURL
+        baseUrl:window.axios.defaults.baseURL,
+        authuser:window.Laravel.user,
+        authadmin:window.Laravel.admin
       }
     },
     mounted(){

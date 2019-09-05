@@ -22,7 +22,7 @@
 
       <div class="row">
         <!-- <product-component @product-emit="showInModal(product)"  v-for="product in products" :product='product' :key='product.id'></product-component> -->
-        <product-component   v-for="product in products" :product='product' :key='product.id'></product-component>
+        <product-component class="col-12 col-md-4 col-lg-3"  v-for="product in products" :product='product' :key='product.id'></product-component>
       </div>
 
       <div class="" v-if="totalRows > perPage">

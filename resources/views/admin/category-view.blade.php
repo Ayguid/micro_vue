@@ -127,7 +127,7 @@
         </div>
 
         <div class="">
-          @include('admin.components.products-component', ['products'=>$category->products()->paginate(3)])
+          @include('admin.components.products-component', ['products'=>$category->products()->with('files', 'attributes.attribute')->paginate(3)])
         </div>
 
 

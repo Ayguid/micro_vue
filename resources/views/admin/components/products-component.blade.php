@@ -12,13 +12,14 @@ $admin=Auth::guard('admin')->check();
 <div class="row">
 
   @foreach ($products as $product)
-    @php
+    {{-- @php
     $files =$product->getFiles();
-    @endphp
+    @endphp --}}
 
-    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-2">
 
-      <h5>Titulo : {{$product-> {'title_' . $lang} ?? $product->title_es}}  </h5>
+
+      <product-component :product='{!! json_encode($product) !!}'  class="col-12 col-md-4 col-lg-3"></product-component>
+      {{-- <h5>Titulo : {{$product-> {'title_' . $lang} ?? $product->title_es}}  </h5>
       <h6>Codigo : {{$product->product_code}}</h6>
       @if ($admin)
         <a href="{{route('editProduct', $product->id)}}">edit</a>
@@ -62,12 +63,12 @@ $admin=Auth::guard('admin')->check();
           @endforeach
         </div>
       </div>
+ --}}
 
 
 
 
 
-    </div>
 
   @endforeach
 </div>

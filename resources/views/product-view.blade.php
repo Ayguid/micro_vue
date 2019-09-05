@@ -2,15 +2,15 @@
 
 @php
 $product = $data['product'];
-$files =$product->getFiles();
 $category = $data['category'];
 $categories = $data['categories'];
 $hash3d=0;
 $admin=Auth::guard('admin')->check();
 
-if ($product->has_cad_3d) {
-  $hash3d=json_encode(asset('storage/stls/'.$files['stls'][0]->file_path));
-}
+$files =$product->files;
+// if ($product->has_cad_3d) {
+//   $hash3d=json_encode(asset('storage/stls/'.$files['stls'][0]->file_path));
+// }
 
 $lang=App::getLocale();
 // if ($lang== 'pt-BR') {
@@ -21,8 +21,7 @@ $lang=App::getLocale();
 @section('content')
   <div class="container">
 
-    <h3>{{session('country.country_desc')}}</h3>
-    {{Lang::get('messages.welcome')}}
+    {{-- <h3>{{session('country.country_desc')}}</h3> --}}
 
     @isset($data['categories'])
       <div class="d-flex flex-wrap justify-content-start">

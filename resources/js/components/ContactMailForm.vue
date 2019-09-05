@@ -2,27 +2,32 @@
   <div class="">
 
 
-
+<!-- {{data}} -->
     <form class="" action="index.html" method="post" @submit="sendMail">
       <p>{{this.title}}</p>
 
-      <div class="row">
+    <div class="row">
         <div class="col-6">
           <input type="text" name="to" :value="this.to" hidden>
-          <input type="text" name="product" :value="JSON.stringify(this.data.product)" hidden>
+          <input type="text" name="product" :value="JSON.stringify(this.product)" hidden>
           <h5>Product Title</h5>
-          <p>{{this.data.product.title_es}}</p>
+          <p>{{this.product.title_es}}</p>
           <h5>Product Code</h5>
           <p>
-            {{this.data.product.product_code}}
+            {{this.product.product_code}}
           </p>
           <div class="form-group">
             <label for="email">User Email</label><br>
-            <input id="user_email" type="email" name="from" :value="(this.data.user)?this.data.user.email:''">
+            <input id="user_email" type="email" name="from" :value="user?user.email:''">
           </div>
         </div>
         <div class="col-6">
-          <img :src="this.image" alt="" width="100%">
+          <div v-if="images.length>0"  class="">
+            <img v-for="image in images" :src="$root.baseUrl+'/storage/product_images/'+image.file_path" alt="" width="100%">
+          </div>
+          <div v-else>
+            <img :src="$root.baseUrl+'/images/default.jpeg'" alt="" width="100%">
+          </div>
         </div>
 
       </div>
@@ -36,9 +41,7 @@
 
 
     </form>
-
-
-
+    
 
 
 
@@ -75,19 +78,17 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 
 export default {
-  props: ['data', 'to', 'image', 'title', 'modal'],
+  props: ['product', 'to', 'images', 'title', 'modal'],
   data(){
     return  {
       contactUrl:this.$root.local+'/send-mail',
       isLoading: false,
       fullPage: true,
+      user:this.$root.authuser
     }
   },
   components: {
     Loading
-  },
-  mounted() {
-
   },
   methods:{
     sendMail:function(event){
@@ -115,6 +116,10 @@ export default {
     onCancel: function() {
       console.log('User cancelled the loader.')
     }
+  },
+  mounted() {
+
+    console.log(this.images.length);
   }
 }
 </script>

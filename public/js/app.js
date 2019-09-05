@@ -1769,23 +1769,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 // Import component
  // Import stylesheet
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['data', 'to', 'image', 'title', 'modal'],
+  props: ['product', 'to', 'images', 'title', 'modal'],
   data: function data() {
     return {
       contactUrl: this.$root.local + '/send-mail',
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      user: this.$root.authuser
     };
   },
   components: {
     Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
   },
-  mounted: function mounted() {},
   methods: {
     sendMail: function sendMail(event) {
       var _this = this;
@@ -1815,6 +1818,9 @@ __webpack_require__.r(__webpack_exports__);
     onCancel: function onCancel() {
       console.log('User cancelled the loader.');
     }
+  },
+  mounted: function mounted() {
+    console.log(this.images.length);
   }
 });
 
@@ -2131,13 +2137,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['product'],
   data: function data() {
-    return {};
+    return {
+      images: this.$sortFilesByType(this.product.files).images
+    };
   },
   components: {},
   methods: {
@@ -2258,16 +2263,118 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['product'],
   data: function data() {
-    return {};
+    return {
+      files: this.$sortFilesByType(this.product.files)
+    };
   },
   methods: {},
   mounted: function mounted() {
     if (this.product.has_cad_3d) {
-      window.location.hash = this.$root.baseUrl + '/storage/stls/' + this.$checkFileStl(this.product.files).file_path;
-    }
+      window.location.hash = this.$root.baseUrl + '/storage/stls/' + this.files.stls[0].file_path;
+    } // console.log(this.files.images.length);
+
   }
 });
 
@@ -75551,20 +75658,20 @@ var render = function() {
             _vm._v(" "),
             _c("input", {
               attrs: { type: "text", name: "product", hidden: "" },
-              domProps: { value: JSON.stringify(this.data.product) }
+              domProps: { value: JSON.stringify(this.product) }
             }),
             _vm._v(" "),
             _c("h5", [_vm._v("Product Title")]),
             _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(this.data.product.title_es))]),
+            _c("p", [_vm._v(_vm._s(this.product.title_es))]),
             _vm._v(" "),
             _c("h5", [_vm._v("Product Code")]),
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "\n          " +
-                  _vm._s(this.data.product.product_code) +
-                  "\n        "
+                "\n            " +
+                  _vm._s(this.product.product_code) +
+                  "\n          "
               )
             ]),
             _vm._v(" "),
@@ -75574,13 +75681,39 @@ var render = function() {
               _vm._v(" "),
               _c("input", {
                 attrs: { id: "user_email", type: "email", name: "from" },
-                domProps: { value: this.data.user ? this.data.user.email : "" }
+                domProps: { value: _vm.user ? _vm.user.email : "" }
               })
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-6" }, [
-            _c("img", { attrs: { src: this.image, alt: "", width: "100%" } })
+            _vm.images.length > 0
+              ? _c(
+                  "div",
+                  {},
+                  _vm._l(_vm.images, function(image) {
+                    return _c("img", {
+                      attrs: {
+                        src:
+                          _vm.$root.baseUrl +
+                          "/storage/product_images/" +
+                          image.file_path,
+                        alt: "",
+                        width: "100%"
+                      }
+                    })
+                  }),
+                  0
+                )
+              : _c("div", [
+                  _c("img", {
+                    attrs: {
+                      src: _vm.$root.baseUrl + "/images/default.jpeg",
+                      alt: "",
+                      width: "100%"
+                    }
+                  })
+                ])
           ])
         ]),
         _vm._v(" "),
@@ -75884,13 +76017,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "col-12 col-md-4 col-lg-3" },
+    {},
     [
       _c("transition", { attrs: { name: "fade", appear: "" } }, [
         _c(
           "div",
           { staticClass: "card mb-4", on: { click: _vm.emitProduct } },
           [
+            _vm.$root.authadmin
+              ? _c(
+                  "a",
+                  {
+                    attrs: {
+                      href:
+                        _vm.$root.baseUrl +
+                        "/admin/editProduct/" +
+                        _vm.product.id
+                    }
+                  },
+                  [_vm._v("EDITAR")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _vm.product.category
               ? _c("h6", { staticClass: "p-2" }, [
                   _c("span", [_vm._v("Categoria: ")]),
@@ -75941,19 +76089,17 @@ var render = function() {
                     ? _c(
                         "div",
                         {},
-                        _vm._l(_vm.product.files, function(file) {
-                          return _vm.$checkFileType(file.file_path) == "img"
-                            ? _c("img", {
-                                attrs: {
-                                  width: "100%",
-                                  src:
-                                    _vm.$root.baseUrl +
-                                    "/storage/product_images/" +
-                                    file.file_path,
-                                  alt: ""
-                                }
-                              })
-                            : _vm._e()
+                        _vm._l(_vm.images, function(image) {
+                          return _c("img", {
+                            attrs: {
+                              width: "100%",
+                              src:
+                                _vm.$root.baseUrl +
+                                "/storage/product_images/" +
+                                image.file_path,
+                              alt: ""
+                            }
+                          })
                         }),
                         0
                       )
@@ -76014,7 +76160,14 @@ var render = function() {
                       ? _c("div", {}, [
                           _c("h6", [
                             _c("strong", [
-                              _vm._v(" " + _vm._s(att.attribute.name_es) + " ")
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    att.attribute["name_" + _vm.$root.local]
+                                      ? att.attribute["name_" + _vm.$root.local]
+                                      : att.attribute["name_es"]
+                                  )
+                              )
                             ])
                           ]),
                           _vm._v(" "),
@@ -76114,68 +76267,408 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
+    {},
     [
-      _c("h6", [_vm._v("Code:   " + _vm._s(_vm.product.product_code))]),
-      _vm._v("\n  " + _vm._s(_vm.product.title_es) + "\n\n\n\n\n  "),
-      _vm._v(" "),
-      _vm._l(_vm.product.attributes, function(att) {
-        return _c("div", {}, [
-          _c("h6", [
-            _c("strong", [_vm._v(" " + _vm._s(att.attribute.name_es) + " ")])
+      _c(
+        "b-tabs",
+        { attrs: { "content-class": "mt-3" } },
+        [
+          _c("b-tab", { attrs: { title: "Detalles", active: "" } }, [
+            _c("div", { staticClass: "col-12 border border-top-0 pt-2 pb-2" }, [
+              _c("h5", [
+                _vm._v(
+                  " " +
+                    _vm._s(
+                      _vm.product["title_" + _vm.$root.local]
+                        ? _vm.product["title_" + _vm.$root.local]
+                        : _vm.product["title_es"]
+                    ) +
+                    " "
+                )
+              ]),
+              _vm._v(" "),
+              _c("h6", [
+                _vm._v("Codigo :   " + _vm._s(_vm.product.product_code))
+              ]),
+              _vm._v(" "),
+              _vm.$root.authadmin
+                ? _c(
+                    "a",
+                    {
+                      attrs: {
+                        href:
+                          _vm.$root.baseUrl +
+                          "/admin/editProduct/" +
+                          _vm.product.id
+                      }
+                    },
+                    [_vm._v("EDITAR")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12 col-md-4 col-lg-4" }, [
+                  _vm.files.images.length > 0
+                    ? _c(
+                        "div",
+                        {},
+                        _vm._l(_vm.files.images, function(img) {
+                          return _c("img", {
+                            attrs: {
+                              width: "100%",
+                              src:
+                                _vm.$root.baseUrl +
+                                "/storage/product_images/" +
+                                img.file_path,
+                              alt: ""
+                            }
+                          })
+                        }),
+                        0
+                      )
+                    : _c("div", {}, [
+                        _c("img", {
+                          staticClass: "productPic",
+                          attrs: {
+                            width: "100%",
+                            src: _vm.$root.baseUrl + "/images/default.jpeg",
+                            alt: ""
+                          }
+                        })
+                      ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12 col-md-8 col-lg-8" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("strong", [_vm._v("Descripción : ")]),
+                      _vm._v(" "),
+                      _c("h6", [
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              _vm.product["desc_" + _vm.$root.local]
+                                ? _vm.product["desc_" + _vm.$root.local]
+                                : _vm.product["desc_es"]
+                            )
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("hr")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    [
+                      _vm._l(_vm.product.attributes, function(att) {
+                        return att.attribute.filterable
+                          ? _c(
+                              "div",
+                              { staticClass: "col-12 col-md-6 col-lg-6" },
+                              [
+                                _c("h6", [
+                                  _c("strong", [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          att.attribute[
+                                            "name_" + _vm.$root.local
+                                          ]
+                                            ? att.attribute[
+                                                "name_" + _vm.$root.local
+                                              ]
+                                            : att.attribute["name_es"]
+                                        ) +
+                                        " "
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("h6", [_vm._v(_vm._s(_vm.$t(att.value)))]),
+                                _vm._v(" "),
+                                _c("h6", [
+                                  _vm._v(
+                                    _vm._s(
+                                      att["value_" + _vm.$root.local]
+                                        ? att["value_" + _vm.$root.local]
+                                        : att["value_es"]
+                                    )
+                                  )
+                                ])
+                              ]
+                            )
+                          : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.product.attributes, function(att) {
+                        return !att.attribute.filterable
+                          ? _c(
+                              "div",
+                              { staticClass: "col-12 col-md-6 col-lg-6" },
+                              [
+                                _c("h6", [
+                                  _c("strong", [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          att.attribute[
+                                            "name_" + _vm.$root.local
+                                          ]
+                                            ? att.attribute[
+                                                "name_" + _vm.$root.local
+                                              ]
+                                            : att.attribute["name_es"]
+                                        ) +
+                                        " "
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("h6", [_vm._v(_vm._s(_vm.$t(att.value)))])
+                              ]
+                            )
+                          : _vm._e()
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "p",
+                [
+                  _c(
+                    "b-button",
+                    {
+                      directives: [
+                        {
+                          name: "b-modal",
+                          rawName: "v-b-modal.modal-1",
+                          modifiers: { "modal-1": true }
+                        }
+                      ]
+                    },
+                    [_vm._v("Solicitar Presupuesto")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-modal",
+                    {
+                      attrs: {
+                        id: "modal-1",
+                        title: "Micro",
+                        "hide-footer": true
+                      }
+                    },
+                    [
+                      _c("contact-mail-form", {
+                        attrs: {
+                          modal: "modal-1",
+                          title: "Contactenos para solicitar un presupuesto",
+                          images: this.files.images,
+                          to: "Comercial",
+                          product: this.product
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ])
           ]),
           _vm._v(" "),
-          _c("h6", [_vm._v(_vm._s(_vm.$t(att.value)))])
-        ])
-      }),
-      _vm._v(" "),
-      _vm.product.has_image
-        ? _c(
-            "div",
-            {},
-            _vm._l(_vm.product.files, function(file) {
-              return _vm.$checkFileType(file.file_path) == "img"
-                ? _c("img", {
+          _c("b-tab", { attrs: { title: "Visualizador" } }, [
+            _vm.product.has_cad_3d
+              ? _c("div", {}, [
+                  _c("iframe", {
+                    staticClass: "mb-3",
                     attrs: {
-                      width: "100%",
+                      id: "viewers",
                       src:
                         _vm.$root.baseUrl +
-                        "/storage/product_images/" +
-                        file.file_path,
-                      alt: ""
+                        "/Online3DViewer-master/website/index.html",
+                      width: "100%",
+                      height: "500",
+                      frameborder: "0",
+                      scrolling: "no",
+                      allowfullscreen: "allowfullscreen"
                     }
                   })
-                : _vm._e()
-            }),
-            0
-          )
-        : _c("div", {}, [
-            _c("img", {
-              attrs: {
-                width: "100%",
-                src: _vm.$root.baseUrl + "/images/default.jpeg",
-                alt: ""
-              }
-            })
+                ])
+              : _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-info mt-3",
+                    attrs: { role: "alert" }
+                  },
+                  [_c("p", [_vm._v("Visualizador 3D no disponible.")])]
+                ),
+            _vm._v(" "),
+            _vm.product.has_cad_2d
+              ? _c("div", { attrs: { id: "d_container" } }, [
+                  _c("div", { attrs: { id: "tapador" } }, [_vm._v("MICRO SA")]),
+                  _vm._v(" "),
+                  _c("iframe", {
+                    attrs: {
+                      onload: "",
+                      id: "cadView",
+                      src:
+                        "https://sharecad.org/cadframe/load?url=micro.plankwebdev.com/storage/dxfs/" +
+                        _vm.files.dxfs[0].file_path,
+                      width: "100%",
+                      height: "500",
+                      frameborder: "0",
+                      scrolling: "no",
+                      allowfullscreen: "allowfullscreen"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "tapadorBottom" } })
+                ])
+              : _c(
+                  "div",
+                  { staticClass: "alert alert-info", attrs: { role: "alert" } },
+                  [_c("p", [_vm._v("Visualizador 2D no disponible.")])]
+                )
           ]),
-      _vm._v(" "),
-      _vm.product.has_cad_3d
-        ? _c("iframe", {
-            staticClass: "mb-3",
-            attrs: {
-              id: "viewers",
-              src:
-                _vm.$root.baseUrl + "/Online3DViewer-master/website/index.html",
-              width: "100%",
-              height: "500",
-              frameborder: "0",
-              scrolling: "no",
-              allowfullscreen: "allowfullscreen"
-            }
-          })
-        : _vm._e()
+          _vm._v(" "),
+          _c("b-tab", { attrs: { title: "Descargas" } }, [
+            _c("h4", [_vm._v("Pdf's")]),
+            _vm._v(" "),
+            _vm.product.has_pdf
+              ? _c(
+                  "div",
+                  {},
+                  _vm._l(_vm.files.pdfs, function(pdf) {
+                    return _c("div", {}, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn",
+                          attrs: {
+                            target: "_blank",
+                            role: "button",
+                            href:
+                              _vm.$root.baseUrl +
+                              "/storage/pdfs/" +
+                              pdf.file_path
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "far fa-file-pdf bigIcon" }),
+                          _vm._v(_vm._s(pdf.file_path))
+                        ]
+                      )
+                    ])
+                  }),
+                  0
+                )
+              : _c("div", {}, [
+                  _c("p", [
+                    _vm._v(
+                      "\n            No Contiene archivos Pdf.\n          "
+                    )
+                  ])
+                ]),
+            _vm._v(" "),
+            _c("h4", { staticClass: "pt-3" }, [_vm._v("Zips's")]),
+            _vm._v(" "),
+            _vm.product.has_zip
+              ? _c("div", {}, [
+                  _vm.$root.authuser
+                    ? _c(
+                        "div",
+                        {},
+                        _vm._l(_vm.files.zips, function(zip) {
+                          return _c("div", {}, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn",
+                                attrs: {
+                                  target: "_blank",
+                                  role: "button",
+                                  href:
+                                    _vm.$root.baseUrl +
+                                    "/storage/zips/" +
+                                    zip.file_path
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "far fa-file-archive bigIcon"
+                                }),
+                                _vm._v(_vm._s(zip.file_path))
+                              ]
+                            )
+                          ])
+                        }),
+                        0
+                      )
+                    : _c("div", {}, [
+                        _vm._v(
+                          "\n            Por Favor Login/Registrate para poder descargar los archivos.\n          "
+                        )
+                      ])
+                ])
+              : _c("div", {}, [
+                  _c("p", [_vm._v("  No Contiene archivos Zip.")])
+                ]),
+            _vm._v(" "),
+            _c(
+              "p",
+              [
+                _c(
+                  "b-button",
+                  {
+                    directives: [
+                      {
+                        name: "b-modal",
+                        rawName: "v-b-modal.modal-2",
+                        modifiers: { "modal-2": true }
+                      }
+                    ]
+                  },
+                  [_vm._v("Solicitar Planos")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "b-modal",
+                  {
+                    attrs: {
+                      id: "modal-2",
+                      title: "Micro",
+                      "hide-footer": true
+                    }
+                  },
+                  [
+                    _c("contact-mail-form", {
+                      attrs: {
+                        modal: "modal-2",
+                        title:
+                          "Complete el formulario para solicitar archivos CAD del producto.",
+                        images: this.files.images,
+                        to: "Ingenieria",
+                        product: this.product
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -76242,6 +76735,7 @@ var render = function() {
         _vm._l(_vm.products, function(product) {
           return _c("product-component", {
             key: product.id,
+            staticClass: "col-12 col-md-4 col-lg-3",
             attrs: { product: product }
           })
         }),
@@ -88577,8 +89071,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('products-portfolio', __web
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('product-view', __webpack_require__(/*! ./components/views/ProductView.vue */ "./resources/js/components/views/ProductView.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('filter-menu', __webpack_require__(/*! ./components/FilterMenu.vue */ "./resources/js/components/FilterMenu.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('search-component', __webpack_require__(/*! ./components/forms/SearchComponent.vue */ "./resources/js/components/forms/SearchComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('product-component', __webpack_require__(/*! ./components/ProductComponent.vue */ "./resources/js/components/ProductComponent.vue")["default"]); // Vue.component('modal-product', require('./components/modalProduct.vue').default);
-//polemicos
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('product-component', __webpack_require__(/*! ./components/ProductComponent.vue */ "./resources/js/components/ProductComponent.vue")["default"]); //polemicos
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('delete-alert', __webpack_require__(/*! ./components/DeleteAlert.vue */ "./resources/js/components/DeleteAlert.vue")["default"]); // Vue.component('filter-helper', require('./components/FilterHelper.vue').default);
 
@@ -88640,7 +89133,9 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   data: function data() {
     return {
       local: lang,
-      baseUrl: window.axios.defaults.baseURL
+      baseUrl: window.axios.defaults.baseURL,
+      authuser: window.Laravel.user,
+      authadmin: window.Laravel.admin
     };
   },
   mounted: function mounted() {}
@@ -89399,17 +89894,43 @@ module.exports = JSON.parse("{\"pt\":{\"Hello world\":\"Bonjour le monde\",\"Nex
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    $checkFileStl: function $checkFileStl(fls) {
+    $sortFilesByType: function $sortFilesByType(fls) {
+      var files = {
+        images: [],
+        stls: [],
+        dxfs: [],
+        pdfs: [],
+        zips: []
+      };
+
       for (var i = 0; i < fls.length; i++) {
-        if (fls[i].file_path.split('.').pop() == 'stl') {
-          return fls[i];
+        switch (fls[i].file_path.split('.').pop()) {
+          case 'jpg':
+          case 'png':
+            files.images.push(fls[i]);
+            break;
+
+          case 'stl':
+            files.stls.push(fls[i]);
+            break;
+
+          case 'dxf':
+            files.dxfs.push(fls[i]);
+            break;
+
+          case 'pdf':
+            files.pdfs.push(fls[i]);
+            break;
+
+          case 'zip':
+            files.zips.push(fls[i]);
+            break;
+
+          default:
         }
       }
-    },
-    $checkFileType: function $checkFileType(fl) {
-      if (fl.split('.').pop() == 'png' || fl.split('.').pop() == 'jpg') {
-        return 'img';
-      }
+
+      return files;
     }
   }
 });
