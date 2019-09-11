@@ -34,6 +34,17 @@ img.logo {
 
 }
 
+.bottomright {
+     position: fixed;
+     bottom: 0px;
+     right: 0px;
+}
+
+.bottomrightExtra {
+     // background-color: HotPink;
+     padding: 20px;
+     margin: 5px;
+}
 
 .custom-select option:checked {
   box-shadow: 0 0 0 3px black;

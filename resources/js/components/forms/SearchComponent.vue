@@ -2,7 +2,7 @@
     <div class="">
 
       <form id="searchForm" :action="consulturl+'/'+query" method="get" class="form-inline my-2 my-lg-0" @submit="validateSearch">
-        <input class="form-control mr-sm-2" type="search" placeholder="search" aria-label="search" name="query">
+        <input class="form-control mr-sm-2" type="search" placeholder="0.000.000-XXX" aria-label="search" name="query">
         <button class="btn btn-outline-success my-2 my-sm-0" name="search" type="submit">Search</button>
       </form>
 

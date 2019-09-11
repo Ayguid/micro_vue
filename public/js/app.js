@@ -1772,6 +1772,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 // Import component
  // Import stylesheet
 
@@ -2391,6 +2394,16 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -75656,24 +75669,28 @@ var render = function() {
               domProps: { value: this.to }
             }),
             _vm._v(" "),
-            _c("input", {
-              attrs: { type: "text", name: "product", hidden: "" },
-              domProps: { value: JSON.stringify(this.product) }
-            }),
-            _vm._v(" "),
-            _c("h5", [_vm._v("Product Title")]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(this.product.title_es))]),
-            _vm._v(" "),
-            _c("h5", [_vm._v("Product Code")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "\n            " +
-                  _vm._s(this.product.product_code) +
-                  "\n          "
-              )
-            ]),
+            this.product
+              ? _c("div", {}, [
+                  _c("input", {
+                    attrs: { type: "text", name: "product", hidden: "" },
+                    domProps: { value: JSON.stringify(this.product) }
+                  }),
+                  _vm._v(" "),
+                  _c("h5", [_vm._v("Product Title")]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(this.product.title_es))]),
+                  _vm._v(" "),
+                  _c("h5", [_vm._v("Product Code")]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(this.product.product_code) +
+                        "\n          "
+                    )
+                  ])
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "email" } }, [_vm._v("User Email")]),
@@ -75686,35 +75703,37 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-6" }, [
-            _vm.images.length > 0
-              ? _c(
-                  "div",
-                  {},
-                  _vm._l(_vm.images, function(image) {
-                    return _c("img", {
-                      attrs: {
-                        src:
-                          _vm.$root.baseUrl +
-                          "/storage/product_images/" +
-                          image.file_path,
-                        alt: "",
-                        width: "100%"
-                      }
-                    })
-                  }),
-                  0
-                )
-              : _c("div", [
-                  _c("img", {
-                    attrs: {
-                      src: _vm.$root.baseUrl + "/images/default.jpeg",
-                      alt: "",
-                      width: "100%"
-                    }
-                  })
-                ])
-          ])
+          this.product
+            ? _c("div", { staticClass: "col-6" }, [
+                _vm.images.length > 0
+                  ? _c(
+                      "div",
+                      {},
+                      _vm._l(_vm.images, function(image) {
+                        return _c("img", {
+                          attrs: {
+                            src:
+                              _vm.$root.baseUrl +
+                              "/storage/product_images/" +
+                              image.file_path,
+                            alt: "",
+                            width: "100%"
+                          }
+                        })
+                      }),
+                      0
+                    )
+                  : _c("div", [
+                      _c("img", {
+                        attrs: {
+                          src: _vm.$root.baseUrl + "/images/default.jpeg",
+                          alt: "",
+                          width: "100%"
+                        }
+                      })
+                    ])
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _vm._m(0),
@@ -76225,7 +76244,7 @@ var render = function() {
           staticClass: "form-control mr-sm-2",
           attrs: {
             type: "search",
-            placeholder: "search",
+            placeholder: "0.000.000-XXX",
             "aria-label": "search",
             name: "query"
           }
@@ -76699,13 +76718,13 @@ var render = function() {
     [
       _c("p", { staticClass: "mt-2 mb-2" }, [
         _vm._v(
-          "\n      " +
+          "\n    " +
             _vm._s(
               _vm.category.get_top_categories["title_" + _vm.$root.local]
                 ? _vm.category.get_top_categories["title_" + _vm.$root.local]
                 : _vm.category.get_top_categories["title_es"]
             ) +
-            " -->\n      " +
+            " -->\n    " +
             _vm._s(
               _vm.category["title_" + _vm.$root.local]
                 ? _vm.category["title_" + _vm.$root.local]
@@ -76783,6 +76802,44 @@ var render = function() {
               "update:active": function($event) {
                 _vm.isLoading = $event
               }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "bottomright bottomrightExtra" },
+        [
+          _c(
+            "b-button",
+            {
+              directives: [
+                {
+                  name: "b-modal",
+                  rawName: "v-b-modal.modal-1",
+                  modifiers: { "modal-1": true }
+                }
+              ]
+            },
+            [_vm._v("Consultar por otros productos")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        { attrs: { id: "modal-1", title: "Micro", "hide-footer": true } },
+        [
+          _c("contact-mail-form", {
+            attrs: {
+              modal: "modal-1",
+              title: "Consultar por otros productos",
+              images: "",
+              to: "Ingenieria",
+              product: ""
             }
           })
         ],

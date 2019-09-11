@@ -22,7 +22,7 @@
       @endphp
       <div class="row mt-2">
         @foreach ($data['products'] as $product)
-          <product-component  :product='{{$product}}' :key='{{$product->id}}'></product-component>
+          <product-component class="col-12 col-md-4 col-lg-3"  :product='{{$product}}' :key='{{$product->id}}'></product-component>
         @endforeach
       </div>
       <div class="d-flex justify-content-around">

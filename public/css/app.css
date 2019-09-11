@@ -10667,6 +10667,17 @@ img.logo {
   width: inherit;
 }
 
+.bottomright {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+}
+
+.bottomrightExtra {
+  padding: 20px;
+  margin: 5px;
+}
+
 .custom-select option:checked {
   box-shadow: 0 0 0 3px black;
   color: #1e6bde;

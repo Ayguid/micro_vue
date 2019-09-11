@@ -42,10 +42,20 @@
         :is-full-page="fullPage"></loading>
       </div>
 
-<!--
-      <b-modal id="modal-porftolio" title="Micro" size="xl"  :hide-footer="true">
-        <modal-product :product="currentProduct"></modal-product>
-      </b-modal> -->
+
+      <div class="bottomright bottomrightExtra">
+        <b-button v-b-modal.modal-1>Consultar por otros productos</b-button>
+      </div>
+
+      <b-modal id="modal-1" title="Micro" :hide-footer="true" >
+        <contact-mail-form
+        :modal="'modal-1'"
+        :title="'Consultar por otros productos'"
+        :images="''"
+        :to="'Ingenieria'"
+        :product="''"
+        ></contact-mail-form>
+      </b-modal>
 
     </div>
   </template>

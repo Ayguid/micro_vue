@@ -9,19 +9,22 @@
     <div class="row">
         <div class="col-6">
           <input type="text" name="to" :value="this.to" hidden>
-          <input type="text" name="product" :value="JSON.stringify(this.product)" hidden>
+          <div class="" v-if="this.product">
+
+          <input  type="text" name="product" :value="JSON.stringify(this.product)" hidden>
           <h5>Product Title</h5>
           <p>{{this.product.title_es}}</p>
           <h5>Product Code</h5>
           <p>
             {{this.product.product_code}}
           </p>
+        </div>
           <div class="form-group">
             <label for="email">User Email</label><br>
             <input id="user_email" type="email" name="from" :value="user?user.email:''">
           </div>
         </div>
-        <div class="col-6">
+        <div v-if="this.product" class="col-6">
           <div v-if="images.length>0"  class="">
             <img v-for="image in images" :src="$root.baseUrl+'/storage/product_images/'+image.file_path" alt="" width="100%">
           </div>
@@ -41,7 +44,7 @@
 
 
     </form>
-    
+
 
 
 
